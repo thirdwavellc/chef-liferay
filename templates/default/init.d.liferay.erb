@@ -3,20 +3,20 @@
 # description: Auto-starts tomcat
 # processname: liferay
 
-cd #{node['liferay']['install_directory']/liferay/tomcat
+cd #{node['liferay']['install_directory']}/liferay/tomcat
 
-chown -R #{node['liferay']['user']} webapps conf temp logs work
+chown -R #{node['liferay']['user']} bin webapps conf temp logs work
 
 case $1 in
 start)
-        sudo -u liferay /opt/liferay/tomcat/bin/startup.sh
+        sudo -u liferay #{node['liferay']['install_directory']/liferay/tomcat/bin/startup.sh
         ;;
 stop)
-        sudo -u liferay /opt/liferay/tomcat/bin/shutdown.sh
+        sudo -u liferay #{node['liferay']['install_directory']/liferay/tomcat/bin/shutdown.sh
         ;;
 restart)
-        sudo -u liferay /opt/liferay/tomcat/bin/shutdown.sh
-        sudo -u liferay /opt/liferay/tomcat/bin/startup.sh
+        sudo -u liferay #{node['liferay']['install_directory']/liferay/tomcat/bin/shutdown.sh
+        sudo -u liferay #{node['liferay']['install_directory']/liferay/tomcat/bin/startup.sh
         ;;
 esac
 exit 0

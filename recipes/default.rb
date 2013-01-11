@@ -83,7 +83,13 @@ template "/etc/logrotate.d/liferay" do
 	mode 00755
 end
 
+service "liferay" do
+	action :start
+end
+
+=begin
 bash "Start Liferay" do
 	code node['liferay']['start_command']
 	action :run
 end
+=end
