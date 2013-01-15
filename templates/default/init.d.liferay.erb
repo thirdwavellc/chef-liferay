@@ -3,20 +3,22 @@
 # description: Auto-starts tomcat
 # processname: liferay
 
-cd <%= @install_directory %>/liferay/tomcat
+export JAVA_HOME=/usr/lib/jvm/java-7-oracle
 
-chown -R <%= @user %> webapps conf temp logs work
+cd /opt/liferay/tomcat
+
+chown -R liferay webapps conf temp logs work
 
 case $1 in
 start)
-        sudo -u liferay <%= @install_directory %>/liferay/tomcat/bin/startup.sh
+        sudo -u liferay /opt/liferay/tomcat/bin/startup.sh
         ;;
 stop)
-        sudo -u liferay <%= @install_directory %>/liferay/tomcat/bin/shutdown.sh
+        sudo -u liferay /opt/liferay/tomcat/bin/shutdown.sh
         ;;
 restart)
-        sudo -u liferay <%= @install_directory %>/liferay/tomcat/bin/shutdown.sh
-        sudo -u liferay <%= @install_directory %>/liferay/tomcat/bin/startup.sh
+        sudo -u liferay /opt/liferay/tomcat/bin/shutdown.sh
+        sudo -u liferay /opt/liferay/tomcat/bin/startup.sh
         ;;
 esac
 exit 0
