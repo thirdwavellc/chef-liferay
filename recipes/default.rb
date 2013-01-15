@@ -88,6 +88,6 @@ template "/etc/logrotate.d/liferay" do
 end
 
 bash "Start Liferay" do
-	code "sudo service liferay start"
+	code "sudo /opt/liferay/tomcat/bin/startup.sh"
 	action :run
 end
