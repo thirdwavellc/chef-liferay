@@ -72,6 +72,10 @@ end
 template "/etc/init.d/liferay" do
 	source "init.d.liferay.erb"
 	mode 00755
+	variables ({
+		:user => node['liferay']['user'],
+		:install_directory => node['liferay']['install_directory']
+	})
 end
 
 link "/etc/rc1.d/K99liferay" do
@@ -88,8 +92,6 @@ template "/etc/logrotate.d/liferay" do
 end
 
 bash "Start Liferay" do
-	code <<-EOH
-	sudo /opt/liferay/tomcat/bin/startup.sh
-	EOH
+	code "sudo service liferay start"
 	action :run
 end
