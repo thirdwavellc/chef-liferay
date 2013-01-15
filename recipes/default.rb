@@ -72,10 +72,6 @@ end
 template "/etc/init.d/liferay" do
 	source "init.d.liferay.erb"
 	mode 00755
-	variables ({
-		:user => node['liferay']['user'],
-		:install_directory => node['liferay']['install_directory']
-	})
 end
 
 link "/etc/rc1.d/K99liferay" do
