@@ -19,50 +19,54 @@
 # limitations under the License.
 #
 
-directory node['liferay']['download_directory'] do
+directory "/usr/local/src/liferay" do
 	action :create
 end
 
-remote_file "#{node['liferay']['download_directory']}/#{node['liferay']['download_filename']}" do
-	source node['liferay']['download_url']
+remote_file "/usr/local/src/liferay/liferay-portal-tomcat-6.1.1-ce-ga2-20120731132656558.zip" do
+	source "http://downloads.sourceforge.net/project/lportal/Liferay%20Portal/6.1.1%20GA2/liferay-portal-tomcat-6.1.1-ce-ga2-20120731132656558.zip"
 	mode 00755
 	action :create_if_missing
-	notifies :run, "bash[Extract Liferay]", :immediately
+	notifies :run, "bash[unzip liferay]", :immediately
 end
 
-bash "Extract Liferay" do
-	code node['liferay']['extract_command']
+bash "unzip liferay" do
+	code <<-EOH
+	sudo unzip /usr/local/src/liferay/liferay-portal-tomcat-6.1.1-ce-ga2-20120731132656558.zip -d /opt/
+	EOH
 	action :nothing
 end
 
-link "#{node['liferay']['install_directory']}/liferay" do
-	to "#{node['liferay']['install_directory']}/#{node['liferay']['download_version']}"
+link "/opt/liferay" do
+	to "/opt/liferay-portal-6.1.1-ce-ga2"
 end
 
-link "#{node['liferay']['install_directory']}/liferay/tomcat" do
-	to "/opt/liferay/#{node['liferay']['tomcat_version']}"
+link "/opt/liferay/tomcat" do
+	to "/opt/liferay/tomcat-7.0.27"
 end
 
-file "#{node['liferay']['install_directory']}/liferay/tomcat/bin/*.bat" do
+file "/opt/liferay/tomcat/bin/*.bat" do
 	action :delete
 end
 
-template "#{node['liferay']['install_directory']}/liferay/tomcat/bin/setenv.sh" do
-	source "setenv.sh"
-	mode 00755
+bash "Optimize memory setting" do
+	code <<-EOH
+	sudo sed -i "1c JAVA_OPTS=\\"\\$JAVA_OPTS -Dfile.encoding=UTF8 -Dorg.apache.catalina.loader.WebappClassLoader.ENABLE_CLEAR_REFERENCES=false -Duser.timezone=GMT -Dcompany-id-properties=true -Xms1024m -Xmx1024m -XX:MaxPermSize=512m\\"" /opt/liferay/tomcat/bin/setenv.sh
+	EOH
+	action :run
 end
 
-directory "#{node['liferay']['install_directory']}/liferay/tomcat/webapps/welcome-theme" do
+directory "/opt/liferay/tomcat/webapps/welcome-theme" do
 	recursive true
 	action :delete
 end
 
-user node['liferay']['user'] do
+user "liferay" do
 	comment "Liferay User"
 end
 
-execute "Change #{node['liferay']['install_directory']}/liferay ownership" do
-	command "sudo chown -R #{node['liferay']['user']}:#{node['liferay']['group']} #{node['liferay']['install_directory']}/liferay"
+execute "change /opt/liferay ownership" do
+	command "sudo chown -R liferay:liferay /opt/liferay"
 end
 
 template "/etc/init.d/liferay" do
@@ -83,13 +87,9 @@ template "/etc/logrotate.d/liferay" do
 	mode 00755
 end
 
-service "liferay" do
-	action :start
-end
-
-=begin
 bash "Start Liferay" do
-	code node['liferay']['start_command']
+	code <<-EOH
+	sudo /opt/liferay/tomcat/bin/startup.sh
+	EOH
 	action :run
 end
-=end
