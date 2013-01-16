@@ -48,7 +48,7 @@ file "#{node['liferay']['install_directory']}/liferay/tomcat/bin/*.bat" do
 end
 
 template "#{node['liferay']['install_directory']}/liferay/tomcat/bin/setenv.sh" do
-	source "setenv.sh"
+	source "setenv.sh.erb"
 	mode 00755
 end
 
