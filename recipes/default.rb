@@ -47,9 +47,11 @@ file "#{node['liferay']['install_directory']}/liferay/tomcat/bin/*.bat" do
 	action :delete
 end
 
-template "#{node['liferay']['install_directory']}/liferay/tomcat/bin/setenv.sh" do
-	source "setenv.sh"
-	mode 00755
+bash "Optimize memory setting" do
+	code <<-EOH
+	sudo sed -i "1c JAVA_OPTS=\\"\\$JAVA_OPTS -Dfile.encoding=UTF8 -Dorg.apache.catalina.loader.WebappClassLoader.ENABLE_CLEAR_REFERENCES=false -Duser.timezone=GMT -Dcompany-id-properties=true -Xms1024m -Xmx1024m -XX:MaxPermSize=512m\\"" /opt/liferay/tomcat/bin/setenv.sh
+	EOH
+	action :run
 end
 
 directory "#{node['liferay']['install_directory']}/liferay/tomcat/webapps/welcome-theme" do
