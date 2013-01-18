@@ -38,3 +38,7 @@ default['liferay']['extract_command'] = "sudo unzip #{liferay['download_director
 default['liferay']['tomcat_version'] = "tomcat-7.0.27"
 
 default['liferay']['start_command'] = "sudo #{liferay['install_directory']}/liferay/tomcat/bin/startup.sh"
+
+default['liferay']['ee']['license_filename'] = "license-portaldevelopment-developer-cluster-6.1ga2-thirdwavepartnerdevlicense.xml"
+
+default['liferay']['ee']['license_url'] = "http://files.thirdwavellc.com/software/liferay/portal/6.1/bundles/license-portaldevelopment-developer-cluster-6.1ga2-thirdwavepartnerdevlicense.xml"
