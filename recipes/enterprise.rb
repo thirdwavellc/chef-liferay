@@ -21,9 +21,12 @@
 
 include_recipe "liferay"
 
+directory "#{node['liferay']['install_directory']}/liferay/deploy" do
+	action :create
+end
+
 remote_file "#{node['liferay']['install_directory']}/liferay/deploy/#{node['liferay']['ee']['license_filename']}" do
 	source node['liferay']['ee']['license_url']
 	mode 00755
 	action :create_if_missing
 end
-
