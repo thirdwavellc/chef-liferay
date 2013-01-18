@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: liferay
-# Recipe:: default
+# Recipe:: enterprise
 #
 # Copyright 2013, Thirdwave, LLC
 # Authors:
