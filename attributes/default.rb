@@ -42,3 +42,7 @@ default['liferay']['start_command'] = "sudo #{liferay['install_directory']}/life
 default['liferay']['ee']['license_filename'] = "your-license-here"
 
 default['liferay']['ee']['license_url'] = "your-license-here"
+
+default['liferay']['ee']['patches']['version'] = "6120"
+
+default['liferay']['ee']['patches']['download_url'] = "your-zip-here"
