@@ -31,8 +31,10 @@ remote_file "#{node['liferay']['install_directory']}/liferay/deploy/#{node['life
 	action :create_if_missing
 end
 
-patch_list = data_bag_item("liferay-ee-patches", node['liferay']['ee']['patches']['version'])
+ruby_block "Install patches" do
+	patch_list = data_bag_item("liferay-ee-patches", node['liferay']['ee']['patches']['version'])
 
-patch_list['patches'].each do |patch|
-	Chef::Log.info("Installing patch: #{patch}")
+	patch_list['patches'].each do |patch|
+		Chef::Log.info("Installing patch: #{patch}")
+	end
 end
