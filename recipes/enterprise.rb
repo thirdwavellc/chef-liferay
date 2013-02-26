@@ -40,5 +40,5 @@ remote_file "#{node['liferay']['install_directory']}/liferay/deploy/#{node['life
 	source node['liferay']['ee']['license_url']
 	mode 00755
 	action :create_if_missing
-	notifies :create, "ruby_block[install-patches]", :immediately
+	notifies :create, resources(:ruby_block => "install-patches"), :immediately
 end
