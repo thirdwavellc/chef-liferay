@@ -21,17 +21,6 @@
 
 include_recipe "liferay"
 
-ruby_block "install-patches" do
-	block do
-		patch_list = data_bag_item("liferay-ee-patches", node['liferay']['ee']['patches']['version'])
-	
-		patch_list['patches'].each do |patch|
-			Chef::Log.info("Installing patch: #{patch}")
-		end
-	end
-	action :nothing
-end
-
 directory "#{node['liferay']['install_directory']}/liferay/deploy" do
 	action :create
 end
