@@ -36,7 +36,13 @@ bash "Stop Liferay" do
 	action :run
 end
 
+bash "Move patches" do
+	code node['liferay']['ee']['install_patch_command']
+	action :run
+end
+
 bash "Install patches" do
+	cwd "#{node['liferay']['install_directory']}/liferay/patching-tool"
 	code node['liferay']['ee']['install_patch_command']
 	action :run
 end
