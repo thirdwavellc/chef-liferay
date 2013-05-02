@@ -36,7 +36,7 @@ default['liferay']['tomcat_version'] = "tomcat-7.0.27"
 # Commands
 default['liferay']['extract_command'] = "sudo unzip #{liferay['download_directory']}/#{liferay['download_filename']} -d #{liferay['install_directory']}/"
 default['liferay']['start_command'] = "sudo #{liferay['install_directory']}/liferay/tomcat/bin/startup.sh"
-default['liferay']['stop_command'] = "sudo #{liferay['install_directory']}/liferay/tomcat/bin/startup.sh"
+default['liferay']['stop_command'] = "sudo #{liferay['install_directory']}/liferay/tomcat/bin/shutdown.sh"
 default['liferay']['install_marketplace_plugins_command'] = "mv /vagrant/downloads/plugins/* #{liferay['install_directory']}/liferay/deploy/"
 
 # EE
