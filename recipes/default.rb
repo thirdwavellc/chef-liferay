@@ -83,6 +83,10 @@ template "/etc/logrotate.d/liferay" do
 	mode 00755
 end
 
+bash "Install marketplace plugins" do
+	code node['liferay']['install_marketplace_plugins_command']
+end
+
 bash "Start Liferay" do
 	code node['liferay']['start_command']
 	action :run

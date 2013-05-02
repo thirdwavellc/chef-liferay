@@ -37,7 +37,7 @@ bash "Stop Liferay" do
 end
 
 bash "Install patches" do
-	code node['liferay']['install_patch_command']
+	code node['liferay']['ee']['install_patch_command']
 	action :run
 end
 
