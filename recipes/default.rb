@@ -88,6 +88,7 @@ directory "#{node['liferay']['install_directory']}/liferay/deploy" do
 end
 
 bash "Install marketplace plugins" do
+	user "root"
 	code node['liferay']['install_marketplace_plugins_command']
 end
 

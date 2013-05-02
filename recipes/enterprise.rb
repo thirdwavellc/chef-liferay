@@ -38,6 +38,7 @@ bash "Move patches" do
 end
 
 bash "Install patches" do
+	user "root"
 	cwd "#{node['liferay']['install_directory']}/liferay/patching-tool"
 	code node['liferay']['ee']['install_patch_command']
 	action :run
