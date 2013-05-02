@@ -13,7 +13,7 @@ Vagrant.configure("2") do |config|
     liferay.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
     liferay.vm.provider "virtualbox" do |v|
-      v.name = "IMSA Liferay"
+      v.name = "Liferay"
 
       v.customize ["modifyvm", :id, "--memory", 2048]
     end
