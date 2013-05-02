@@ -30,3 +30,18 @@ remote_file "#{node['liferay']['install_directory']}/liferay/deploy/#{node['life
 	mode 00755
 	action :create_if_missing
 end
+
+bash "Stop Liferay" do
+	code node['liferay']['stop_command']
+	action :run
+end
+
+bash "Install patches" do
+	code node['liferay']['install_patch_command']
+	action :run
+end
+
+bash "Start Liferay" do
+	code node['liferay']['start_command']
+	action :run
+end
