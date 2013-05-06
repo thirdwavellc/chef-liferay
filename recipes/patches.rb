@@ -24,7 +24,8 @@ bash "Stop Liferay" do
 	action :run
 end
 
-directory "#{node['liferay']['install_directory']}/liferay/patching-tool" do
+directory "#{node['liferay']['install_directory']}/liferay/patching-tool/patches" do
+	recursive true
 	action :create
 end
 
