@@ -87,6 +87,10 @@ directory "#{node['liferay']['install_directory']}/liferay/deploy" do
 	action :create
 end
 
+link "#{node['liferay']['install_directory']}/liferay/deploy" do
+	to "/vagrant/dist"
+end
+
 bash "Start Liferay" do
 	code node['liferay']['start_command']
 	action :run
