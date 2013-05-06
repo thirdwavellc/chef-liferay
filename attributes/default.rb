@@ -38,9 +38,9 @@ default['liferay']['extract_command'] = "sudo unzip #{liferay['download_director
 default['liferay']['start_command'] = "sudo #{liferay['install_directory']}/liferay/tomcat/bin/startup.sh"
 default['liferay']['stop_command'] = "sudo #{liferay['install_directory']}/liferay/tomcat/bin/shutdown.sh"
 default['liferay']['install_marketplace_plugins_command'] = "cp /vagrant/downloads/marketplace/* #{liferay['install_directory']}/liferay/deploy/"
+default['liferay']['move_patch_command'] = "cp /vagrant/downloads/patches/* #{liferay['install_directory']}/liferay/patching-tool/patches/"
+default['liferay']['install_patch_command'] = "sh patching-tool.sh install"
 
 # EE
 default['liferay']['ee']['license_filename'] = "your-license-here"
 default['liferay']['ee']['license_url'] = "your-license-here"
-default['liferay']['ee']['move_patch_command'] = "cp /vagrant/downloads/patches/* #{liferay['install_directory']}/liferay/patching-tool/patches/"
-default['liferay']['ee']['install_patch_command'] = "sh patching-tool.sh install"

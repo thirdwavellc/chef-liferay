@@ -87,11 +87,6 @@ directory "#{node['liferay']['install_directory']}/liferay/deploy" do
 	action :create
 end
 
-bash "Install marketplace plugins" do
-	user "root"
-	code node['liferay']['install_marketplace_plugins_command']
-end
-
 bash "Start Liferay" do
 	code node['liferay']['start_command']
 	action :run

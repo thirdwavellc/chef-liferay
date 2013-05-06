@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: liferay
-# Recipe:: enterprise
+# Recipe:: patches
 #
 # Copyright 2013, Thirdwave, LLC
 # Authors:
@@ -19,10 +19,29 @@
 # limitations under the License.
 #
 
-include_recipe "liferay"
+bash "Stop Liferay" do
+	code node['liferay']['stop_command']
+	action :run
+end
 
-remote_file "#{node['liferay']['install_directory']}/liferay/deploy/#{node['liferay']['ee']['license_filename']}" do
-	source node['liferay']['ee']['license_url']
-	mode 00755
-	action :create_if_missing
+directory "#{node['liferay']['install_directory']}/liferay/patching-tool" do
+	action :create
+end
+
+bash "Move patches" do
+	user "root"
+	code node['liferay']['move_patch_command']
+	action :run
+end
+
+bash "Install patches" do
+	user "root"
+	cwd "#{node['liferay']['install_directory']}/liferay/patching-tool"
+	code node['liferay']['install_patch_command']
+	action :run
+end
+
+bash "Start Liferay" do
+	code node['liferay']['start_command']
+	action :run
 end
