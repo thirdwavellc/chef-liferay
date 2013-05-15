@@ -26,6 +26,7 @@ Vagrant.configure("2") do |config|
       chef.add_recipe "imagemagick"
       chef.add_recipe "java"
       chef.add_recipe "liferay"
+      chef.add_recipe "liferay::aliases"
       chef.add_recipe "mysql-connector::java"
     end
   end
