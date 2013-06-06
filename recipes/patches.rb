@@ -20,9 +20,9 @@
 # limitations under the License.
 #
 
-if not "#{node['liferay']['patching_tool_zip']}" == ""
+if not "#{node['liferay']['ee']['patching_tool_zip']}" == ""
 	execute "copy over patching tool" do
-		command "sudo cp /vagrant/downloads/patching-tool/#{node['liferay']['patching_tool_zip']} #{node['liferay']['install_directory']}/liferay/patching-tool.zip"
+		command "sudo cp /vagrant/downloads/patching-tool/#{node['liferay']['ee']['patching_tool_zip']} #{node['liferay']['install_directory']}/liferay/patching-tool.zip"
 	end
 
 	execute "extract patching tool" do
@@ -33,7 +33,7 @@ if not "#{node['liferay']['patching_tool_zip']}" == ""
 end
 
 bash "copy over patches" do
-	code node['liferay']['move_patch_command']
+	code node['liferay']['ee']['move_patch_command']
 	action :run
 end
 
