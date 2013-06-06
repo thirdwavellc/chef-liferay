@@ -1,0 +1,24 @@
+<Context path="" crossContext="true">
+	<Resource
+        name="<%= @dsn %>"
+        auth="Container"
+		type="javax.sql.DataSource"
+        factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
+        username="<%= @username %>"
+        password="<%= @password %>"
+        driverClassName="<%= @driver %>"
+        url="<%= @jdbc_url %>"
+		initialSize="10"
+	    maxActive="100"
+        maxIdle="50"
+        minIdle="10"
+		suspectTimeout="60"
+	    timeBetweenEvictionRunsMillis="30000"
+        minEvictableIdleTimeMillis="60000"
+        logAbandoned="false"
+        removeAbandoned="true"
+        removeAbandonedTimeout="360"
+	    validationQuery="select version();"
+        validationInterval="30000"		
+	/>	
+</Context>

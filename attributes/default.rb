@@ -5,6 +5,7 @@
 # Copyright 2013, Thirdwave, LLC
 # Authors:
 # 		Adam Krone <adam.krone@thirdwavellc.com>
+#		Henry Kastler <henry.kastler@thirdwavellc.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -44,3 +45,11 @@ default['liferay']['install_patch_command'] = "sh patching-tool.sh install"
 # EE
 default['liferay']['ee']['license_filename'] = "your-license-here"
 default['liferay']['ee']['license_url'] = "your-license-here"
+
+#tomcat
+default['liferay']['tomcat']['server_xml']['port'] = "8080"
+default['liferay']['tomcat']['root_xml']['dsn'] = "jdbc/lportal"
+default['liferay']['tomcat']['root_xml']['username'] = "test"
+default['liferay']['tomcat']['root_xml']['password'] = "test"
+default['liferay']['tomcat']['root_xml']['driver'] = "org.postgresql.Driver"
+default['liferay']['tomcat']['root_xml']['jdbc_url'] = "jdbc:postgresql://172.16.33.110:5432/lportal" 
