@@ -5,6 +5,7 @@
 # Copyright 2013, Thirdwave, LLC
 # Authors:
 # 		Adam Krone <adam.krone@thirdwavellc.com>
+#		Henry Kastler <henry.kastler@thirdwavellc.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,30 +20,31 @@
 # limitations under the License.
 #
 
-bash "Stop Liferay" do
-	code node['liferay']['stop_command']
-	action :run
+if not "#{node['liferay']['patching_tool_zip']}" == ""
+	execute "copy over patching tool" do
+		command "sudo cp /vagrant/downloads/patching-tool/#{node['liferay']['patching_tool_zip']} #{node['liferay']['install_directory']}/liferay/patching-tool.zip"
+	end
+
+	execute "extract patching tool" do
+		command "sudo rm -rf #{node['liferay']['install_directory']}/liferay/patching-tool"
+		command "sudo unzip #{node['liferay']['install_directory']}/liferay/patching-tool.zip"
+		command "sudo rm #{node['liferay']['install_directory']}/liferay/patching-tool.zip"
+	end
 end
 
-directory "#{node['liferay']['install_directory']}/liferay/patching-tool/patches" do
-	recursive true
-	action :create
-end
-
-bash "Move patches" do
-	user "root"
+bash "copy over patches" do
 	code node['liferay']['move_patch_command']
 	action :run
 end
 
-bash "Install patches" do
-	user "root"
-	cwd "#{node['liferay']['install_directory']}/liferay/patching-tool"
-	code node['liferay']['install_patch_command']
-	action :run
+#create this file needed for the patch install
+template "#{node['liferay']['install_directory']}/liferay/patching-tool/default.properties" do
+	source "patching_tool.default.properties.erb"
+	mode 00755	
+	owner "liferay"
+	group "liferay"	
 end
 
-bash "Start Liferay" do
-	code node['liferay']['start_command']
-	action :run
+execute "patching tool install" do
+	command "sudo sh #{node['liferay']['install_directory']}/liferay/patching-tool/patching-tool.sh install"
 end
