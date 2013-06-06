@@ -124,38 +124,18 @@ template "#{node['liferay']['install_directory']}/liferay/tomcat/conf/Catalina/l
 	})
 end
 
-execute "copy over patching tool" do
-	command "sudo cp /vagrant/downloads/patching-tool/patching-tool-9.zip #{node['liferay']['install_directory']}/liferay/patching-tool.zip"
+if "#{node['liferay']['ee']['license_url']}" =~ /^#{URI::regexp}$/
+	include_recipe "liferay::patches"	
+	include_recipe "liferay::enterprise"
 end
 
-execute "extract patching tool" do
-	command "sudo rm -rf #{node['liferay']['install_directory']}/liferay/patching-tool"
-	command "sudo unzip #{node['liferay']['install_directory']}/liferay/patching-tool.zip"
-	command "sudo rm #{node['liferay']['install_directory']}/liferay/patching-tool.zip"
+link "/vagrant/lib/ecj.jar" do
+	to "/usr/share/ant/lib/ecj.jar"
 end
 
-execute "copy over patches" do
-	command "sudo cp /vagrant/downloads/patches/* #{node['liferay']['install_directory']}/liferay/patching-tool/patches/."
-end
-
-#create this file needed for the patch install
-template "#{node['liferay']['install_directory']}/liferay/patching-tool/default.properties" do
-	source "patching_tool.default.properties.erb"
-	mode 00755	
-	owner "liferay"
-	group "liferay"	
-end
-
-execute "patching tool install" do
-	command "sudo sh #{node['liferay']['install_directory']}/liferay/patching-tool/patching-tool.sh install"
-end
-
-execute "install ecj" do
-	command "sudo cp /vagrant/lib/ecj.jar /usr/share/ant/lib/."	
-end
-
-execute "load ext" do
-	command "sudo ant direct-deploy -buildfile /vagrant/ext/atk-ext/build.xml"	
+bash "load ext" do
+	code node['liferay']['load_ext_command']
+	action :run
 end
 
 bash "Start Liferay" do
