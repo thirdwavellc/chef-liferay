@@ -48,7 +48,7 @@ default['liferay']['ee']['patching_tool_zip'] = ""
 default['liferay']['ee']['move_patch_command'] = "cp /vagrant/downloads/patches/* #{liferay['install_directory']}/liferay/patching-tool/patches/"
 default['liferay']['ee']['install_patch_command'] = "sh patching-tool.sh install"
 
-#tomcat
+# Tomcat
 default['liferay']['tomcat']['server_xml']['port'] = "8080"
 default['liferay']['tomcat']['root_xml']['dsn'] = "jdbc/lportal"
 default['liferay']['tomcat']['root_xml']['username'] = "test"
@@ -56,4 +56,10 @@ default['liferay']['tomcat']['root_xml']['password'] = "test"
 default['liferay']['tomcat']['root_xml']['driver'] = "org.postgresql.Driver"
 default['liferay']['tomcat']['root_xml']['jdbc_url'] = "jdbc:postgresql://172.16.33.110:5432/lportal"
 
-
+# PostgreSQL
+default['liferay']['postgresql']['user'] = "liferay_user"
+default['liferay']['postgresql']['user_password'] = "l1f3r4y$"
+default['liferay']['postgresql']['db_default'] = "lportal"
+default['liferay']['postgresql']['db_dev'] = "liferay_dev"
+default['liferay']['postgresql']['db_staging'] = "liferay_stage"
+default['liferay']['postgresql']['db_production'] = "liferay_prod"
