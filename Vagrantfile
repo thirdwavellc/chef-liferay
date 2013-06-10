@@ -18,7 +18,7 @@ Vagrant.configure("2") do |config|
       v.customize ["modifyvm", :id, "--memory", 2048]
     end
 
-    liferay.vm.network :private_network, ip: "192.168.1.10"
+    liferay.vm.network :private_network, ip: "172.16.30.10"
 
     liferay.vm.provision :chef_solo do |chef|
       chef.add_recipe "apt"
@@ -46,7 +46,7 @@ Vagrant.configure("2") do |config|
 
     end
 
-    postgres.vm.network :private_network, ip: "192.168.1.20"
+    postgres.vm.network :private_network, ip: "172.16.40.10"
 
     postgres.vm.provision :chef_solo do |chef|
       chef.add_recipe "apt"
@@ -96,7 +96,7 @@ Vagrant.configure("2") do |config|
       v.customize  ["modifyvm", :id, "--memory", 1024]
     end
 
-    mysql.vm.network :private_network, ip: "192.168.1.30"
+    mysql.vm.network :private_network, ip: "172.16.40.20"
 
     mysql.vm.provision :chef_solo do |chef|
       chef.add_recipe "apt"
@@ -107,7 +107,7 @@ Vagrant.configure("2") do |config|
       chef.json = {
         :mysql => {
           :allow_remote_root => true,
-          :bind_address => "192.168.1.30",
+          :bind_address => "172.16.40.20",
           :server_debian_password => "autobahn",
           :server_repl_password => "autobahn",
           :server_root_password => "autobahn"
