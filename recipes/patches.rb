@@ -21,14 +21,18 @@
 #
 
 if not "#{node['liferay']['ee']['patching_tool_zip']}" == ""
-	execute "copy over patching tool" do
-		command "sudo cp /vagrant/downloads/patching-tool/#{node['liferay']['ee']['patching_tool_zip']} #{node['liferay']['install_directory']}/liferay/patching-tool.zip"
+	directory "#{node['liferay']['install_directory']}/liferay/patching-tool" do
+		action :delete 
+		recursive true
 	end
 
-	execute "extract patching tool" do
-		command "sudo rm -rf #{node['liferay']['install_directory']}/liferay/patching-tool"
-		command "sudo unzip #{node['liferay']['install_directory']}/liferay/patching-tool.zip"
-		command "sudo rm #{node['liferay']['install_directory']}/liferay/patching-tool.zip"
+	execute "copy over patching tool #{node['liferay']['ee']['patching_tool_zip']}" do
+		command "sudo cp /vagrant/downloads/patching-tool/#{node['liferay']['ee']['patching_tool_zip']} #{node['liferay']['install_directory']}/liferay/#{node['liferay']['ee']['patching_tool_zip']}"
+	end	
+
+	execute "extract #{node['liferay']['ee']['patching_tool_zip']}" do
+		cwd "#{node['liferay']['install_directory']}/liferay/"
+		command "sudo unzip -o #{node['liferay']['ee']['patching_tool_zip']}"
 	end
 end
 
