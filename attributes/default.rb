@@ -40,6 +40,7 @@ default['liferay']['start_command'] = "sudo #{liferay['install_directory']}/life
 default['liferay']['stop_command'] = "sudo #{liferay['install_directory']}/liferay/tomcat/bin/shutdown.sh"
 default['liferay']['install_marketplace_plugins_command'] = "cp /vagrant/downloads/marketplace/* #{liferay['install_directory']}/liferay/deploy/"
 default['liferay']['load_ext_command'] = "sudo ant direct-deploy -buildfile /vagrant/ext/your-ext/build.xml"
+default['liferay']['copy_ecj'] = "sudo cp /vagrant/lib/ecj.jar /usr/share/ant/lib/ecj.jar"
 
 # EE
 default['liferay']['ee']['license_filename'] = "your-license-here"

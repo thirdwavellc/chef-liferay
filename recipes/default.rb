@@ -129,8 +129,9 @@ if "#{node['liferay']['ee']['license_url']}" =~ /^#{URI::regexp}$/
 	include_recipe "liferay::enterprise"
 end
 
-link "/vagrant/lib/ecj.jar" do
-	to "/usr/share/ant/lib/ecj.jar"
+bash "copy over ecj" do
+	code node['liferay']['copy_ecj']
+	action :run
 end
 
 bash "load ext" do
