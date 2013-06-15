@@ -99,8 +99,8 @@ end
 template "#{node['liferay']['install_directory']}/liferay/tomcat/conf/server.xml" do
 	source "server.xml.erb"
 	mode 00755	
-	owner "liferay"
-	group "liferay"
+	owner "#{node['liferay']['user']}"
+	group "#{node['liferay']['group']}"
 	variables({
 		:port => node[:liferay][:tomcat][:server_xml][:port]		
 	})
@@ -113,8 +113,8 @@ end
 template "#{node['liferay']['install_directory']}/liferay/tomcat/conf/Catalina/localhost/ROOT.xml" do
 	source "ROOT.xml.erb"
 	mode 00755	
-	owner "liferay"
-	group "liferay"
+	owner "#{node['liferay']['user']}"
+	group "#{node['liferay']['group']}"
 	variables({
 		:dsn => node[:liferay][:tomcat][:root_xml][:dsn],
 		:username => node[:liferay][:tomcat][:root_xml][:username],
