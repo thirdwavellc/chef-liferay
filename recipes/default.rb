@@ -20,6 +20,10 @@
 # limitations under the License.
 #
 
+user node['liferay']['user'] do
+	comment "Liferay User"
+end
+
 directory node['liferay']['download_directory'] do
 	action :create
 end
@@ -56,10 +60,6 @@ end
 directory "#{node['liferay']['install_directory']}/liferay/tomcat/webapps/welcome-theme" do
 	recursive true
 	action :delete
-end
-
-user node['liferay']['user'] do
-	comment "Liferay User"
 end
 
 execute "Change #{node['liferay']['install_directory']}/liferay ownership" do
