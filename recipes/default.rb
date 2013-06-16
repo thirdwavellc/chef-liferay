@@ -22,6 +22,7 @@
 
 user node['liferay']['user'] do
 	comment "Liferay User"
+	home "/home/#{node['liferay']['user']}"
 end
 
 directory node['liferay']['download_directory'] do
