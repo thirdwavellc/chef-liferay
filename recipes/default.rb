@@ -36,28 +36,34 @@ remote_file "#{node['liferay']['download_directory']}/#{node['liferay']['downloa
 end
 
 bash "Extract Liferay" do
+	user node['liferay']['user']
 	code node['liferay']['extract_command']
 	action :nothing
 end
 
 link "#{node['liferay']['install_directory']}/liferay" do
+	user node['liferay']['user']
 	to "#{node['liferay']['install_directory']}/#{node['liferay']['download_version']}"
 end
 
 link "#{node['liferay']['install_directory']}/liferay/tomcat" do
+	user node['liferay']['user']
 	to "/opt/liferay/#{node['liferay']['tomcat_version']}"
 end
 
 file "#{node['liferay']['install_directory']}/liferay/tomcat/bin/*.bat" do
+	user node['liferay']['user']
 	action :delete
 end
 
 template "#{node['liferay']['install_directory']}/liferay/tomcat/bin/setenv.sh" do
+	user node['liferay']['user']
 	source "setenv.sh.erb"
 	mode 00755
 end
 
 directory "#{node['liferay']['install_directory']}/liferay/tomcat/webapps/welcome-theme" do
+	user node['liferay']['user']
 	recursive true
 	action :delete
 end
@@ -85,6 +91,7 @@ template "/etc/logrotate.d/liferay" do
 end
 
 directory "#{node['liferay']['install_directory']}/liferay/deploy" do
+	user node['liferay']['user']
 	action :create
 end
 
