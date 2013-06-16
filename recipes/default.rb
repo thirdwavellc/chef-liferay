@@ -142,11 +142,13 @@ bash "copy over ecj" do
 end
 
 bash "load ext" do
+	user node['liferay']['user']
 	code node['liferay']['load_ext_command']
 	action :run
 end
 
 bash "Start Liferay" do
+	user node['liferay']['user']
 	code node['liferay']['start_command']
 	action :run
 end
