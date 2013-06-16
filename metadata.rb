@@ -1,4 +1,4 @@
-name		  	  "liferay"
+name              "liferay"
 maintainer        "Thirdwave, LLC"
 maintainer_email  "adam.krone@thirdwavellc.com"
 license           "Apache 2.0"
