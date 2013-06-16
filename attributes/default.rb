@@ -35,12 +35,12 @@ default['liferay']['download_url'] = "http://downloads.sourceforge.net/project/l
 default['liferay']['tomcat_version'] = "tomcat-7.0.27"
 
 # Commands
-default['liferay']['extract_command'] = "sudo unzip #{liferay['download_directory']}/#{liferay['download_filename']} -d #{liferay['install_directory']}/"
-default['liferay']['start_command'] = "sudo #{liferay['install_directory']}/liferay/tomcat/bin/startup.sh"
-default['liferay']['stop_command'] = "sudo #{liferay['install_directory']}/liferay/tomcat/bin/shutdown.sh"
+default['liferay']['extract_command'] = "unzip #{liferay['download_directory']}/#{liferay['download_filename']} -d #{liferay['install_directory']}/"
+default['liferay']['start_command'] = "#{liferay['install_directory']}/liferay/tomcat/bin/startup.sh"
+default['liferay']['stop_command'] = "#{liferay['install_directory']}/liferay/tomcat/bin/shutdown.sh"
 default['liferay']['install_marketplace_plugins_command'] = "cp /vagrant/downloads/marketplace/* #{liferay['install_directory']}/liferay/deploy/"
-default['liferay']['load_ext_command'] = "sudo ant direct-deploy -buildfile /vagrant/ext/your-ext/build.xml"
-default['liferay']['copy_ecj'] = "sudo cp /vagrant/lib/ecj.jar /usr/share/ant/lib/ecj.jar"
+default['liferay']['load_ext_command'] = "ant direct-deploy -buildfile /vagrant/ext/your-ext/build.xml"
+default['liferay']['copy_ecj'] = "cp /vagrant/lib/ecj.jar /usr/share/ant/lib/ecj.jar"
 
 # EE
 default['liferay']['ee']['license_filename'] = "your-license-here"
