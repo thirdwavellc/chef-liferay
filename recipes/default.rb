@@ -73,9 +73,8 @@ execute "Change #{node['liferay']['install_directory']}/liferay ownership" do
 	command "sudo chown -R #{node['liferay']['user']}:#{node['liferay']['group']} #{node['liferay']['install_directory']}/liferay"
 end
 
+# Configure the Liferay Service and Log Rotations
 template "/etc/init.d/liferay" do
-	source "init.d.liferay.erb"
-	mode 00755
   source "init.d.liferay.erb"
   mode 00755
   variables({
@@ -94,8 +93,11 @@ link "/etc/rc2.d/S99liferay" do
 end
 
 template "/etc/logrotate.d/liferay" do
-	source "logrotate.d.liferay.erb"
-	mode 00755
+  source "logrotate.d.liferay.erb"
+  mode 00755
+  variables({
+    :liferay_log_home => "#{node['liferay']['install_directory']}/liferay/tomcat/logs"
+  })
 end
 
 directory "#{node['liferay']['install_directory']}/liferay/deploy" do
