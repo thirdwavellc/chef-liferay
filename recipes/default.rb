@@ -137,11 +137,6 @@ if "#{node['liferay']['ee']['license_url']}" =~ /^#{URI::regexp}$/
 	include_recipe "liferay::enterprise"
 end
 
-bash "copy over ecj" do
-	code node['liferay']['copy_ecj']
-	action :run
-end
-
 bash "load ext" do
 	user node['liferay']['user']
 	code node['liferay']['load_ext_command']
