@@ -1,13 +1,13 @@
-alias lrhome='cd /opt/liferay/'
+alias lrhome='cd <%= @liferay_home %>'
 
-alias lrtail='sudo tail -f /opt/liferay/tomcat/logs/catalina.out'
+alias lrtail='sudo -u liferay tail -f <%= @liferay_log_home %>/catalina.out'
 
-alias lrstart='sudo sh /opt/liferay/tomcat/bin/startup.sh'
+alias lrstart='sudo /etc/init.d/liferay start'
 
-alias lrstop='sudo sh /opt/liferay/tomcat/bin/shutdown.sh'
+alias lrstop='sudo /etc/init.d/liferay start'
 
-alias lrclear='sudo rm /opt/liferay/tomcat/logs/*'
+alias lrclear='sudo rm <%= @liferay_log_home %>/*'
 
 alias lrps='sudo ps aux | grep java'
 
-alias lrdeploy='sudo cp /vagrant/dist/* /opt/liferay/deploy/.'
+alias lrdeploy='sudo -u liferay cp /vagrant/dist/* <%= @liferay_home %>/deploy/.'

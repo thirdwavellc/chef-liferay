@@ -23,6 +23,10 @@ template "/home/vagrant/.bash_aliases" do
 	source ".bash_aliases.erb"
 	owner "vagrant"
 	group "vagrant"
+  variables({
+    :liferay_home => "#{node['liferay']['install_directory']}/liferay"
+    :liferay_log_home => "#{node['liferay']['install_directory']}/liferay/tomcat/logs"
+  })
 end
 
 bash "source-aliases-immediately" do
