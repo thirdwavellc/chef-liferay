@@ -95,11 +95,11 @@ template "/etc/init.d/liferay" do
 end
 
 link "/etc/rc1.d/K99liferay" do
-	to "/etc/init.d/liferay"
+  to "/etc/init.d/liferay"
 end
 
 link "/etc/rc2.d/S99liferay" do
-	to "/etc/init.d/S99liferay"
+  to "/etc/init.d/S99liferay"
 end
 
 template "/etc/logrotate.d/liferay" do
@@ -119,13 +119,13 @@ directory "#{node['liferay']['install_directory']}/liferay/deploy" do
 end
 
 template "#{node['liferay']['install_directory']}/liferay/tomcat/conf/server.xml" do
-	source "server.xml.erb"
-	mode 00755	
-	owner "#{node['liferay']['user']}"
-	group "#{node['liferay']['group']}"
-	variables({
-		:port => node[:liferay][:tomcat][:server_xml][:port]		
-	})
+  source "server.xml.erb"
+  mode 00755	
+  owner "#{node['liferay']['user']}"
+  group "#{node['liferay']['group']}"
+  variables({
+    :port => node[:liferay][:tomcat][:server_xml][:port]
+  })
 end
 
 directory "#{node['liferay']['install_directory']}/liferay/tomcat/conf/Catalina/localhost/" do
@@ -150,8 +150,8 @@ template "#{node['liferay']['install_directory']}/liferay/tomcat/conf/Catalina/l
 end
 
 if "#{node['liferay']['ee']['license_url']}" =~ /^#{URI::regexp}$/
-	include_recipe "liferay::patches"	
-	include_recipe "liferay::enterprise"
+  include_recipe "liferay::patches"	
+  include_recipe "liferay::enterprise"
 end
 
 bash "copy over ecj" do
