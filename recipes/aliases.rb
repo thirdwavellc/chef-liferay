@@ -24,7 +24,7 @@ template "/home/vagrant/.bash_aliases" do
 	owner "vagrant"
 	group "vagrant"
   variables({
-    :liferay_home => "#{node['liferay']['install_directory']}/liferay"
+    :liferay_home => "#{node['liferay']['install_directory']}/liferay",
     :liferay_log_home => "#{node['liferay']['install_directory']}/liferay/tomcat/logs"
   })
 end

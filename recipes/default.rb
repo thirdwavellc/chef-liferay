@@ -88,8 +88,8 @@ template "/etc/init.d/liferay" do
   source "init.d.liferay.erb"
   mode 00755
   variables({
-    :liferay_home => "#{node['liferay']['install_directory']}/liferay"
-    :user => node['liferay']['user']
+    :liferay_home => "#{node['liferay']['install_directory']}/liferay",
+    :user => node['liferay']['user'],
     :group => node['liferay']['group']
   })
 end
