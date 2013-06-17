@@ -159,14 +159,26 @@ bash "copy over ecj" do
 	action :run
 end
 
-bash "load ext" do
-	user node['liferay']['user']
-	code node['liferay']['load_ext_command']
-	action :run
+bash "Load EXT Environment" do
+  cwd "/home/#{node['liferay']['user']}/"
+  user node['liferay']['user']
+  group node['liferay']['group']
+  code <<-EOH
+    ant deploy-properties -buildfile #{node['liferay']['ext_buildfile']}
+    ant war -buildfile #{node['liferay']['ext_buildfile']}
+    mkdir -p dist
+    cp /vagrant/dist/*-ext-* dist/
+    chown -R #{node['liferay']['user']}:#{node['liferay']['group']} dist
+    cp dist/*-ext-* #{node['liferay']['install_directory']}/liferay/deploy/
+    EOH
+  action :run
+  notifies :run, "bash[Start Liferay]", :immediately
 end
 
 bash "Start Liferay" do
-	user node['liferay']['user']
-	code node['liferay']['start_command']
-	action :run
+  user "root"
+  code <<-EOH
+    /etc/init.d/liferay start
+    EOH
+  action :nothing
 end
