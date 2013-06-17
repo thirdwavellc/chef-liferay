@@ -58,34 +58,29 @@ bash "Move Liferay" do
 end
 
 link "#{node['liferay']['install_directory']}/liferay" do
-	user "root"
-	to "#{node['liferay']['install_directory']}/#{node['liferay']['download_version']}"
+  owner "#{node['liferay']['user']}"
+  group "#{node['liferay']['group']}"
+  to "#{node['liferay']['install_directory']}/#{node['liferay']['download_version']}"
 end
 
 link "#{node['liferay']['install_directory']}/liferay/tomcat" do
-	user "root"
-	to "/opt/liferay/#{node['liferay']['tomcat_version']}"
+  owner "#{node['liferay']['user']}"
+  group "#{node['liferay']['group']}"
+  to "#{node['liferay']['install_directory']}/liferay/#{node['liferay']['tomcat_version']}"
 end
 
 file "#{node['liferay']['install_directory']}/liferay/tomcat/bin/*.bat" do
-	user "root"
-	action :delete
+  action :delete
 end
 
 template "#{node['liferay']['install_directory']}/liferay/tomcat/bin/setenv.sh" do
-	user "root"
-	source "setenv.sh.erb"
-	mode 00755
+  source "setenv.sh.erb"
+  mode 01755
 end
 
 directory "#{node['liferay']['install_directory']}/liferay/tomcat/webapps/welcome-theme" do
-	user "root"
-	recursive true
-	action :delete
-end
-
-execute "Change #{node['liferay']['install_directory']}/liferay ownership" do
-	command "sudo chown -R #{node['liferay']['user']}:#{node['liferay']['group']} #{node['liferay']['install_directory']}/liferay"
+  recursive true
+  action :delete
 end
 
 # Configure the Liferay Service and Log Rotations
