@@ -17,12 +17,12 @@
 APP_NAME="Liferay"
 
 #Location of Liferay installation
-export LIFERAY_HOME=/opt/liferay
+export LIFERAY_HOME=<% = @liferay_home %>
 
 #unprivileged user that runs the daemon. The group/user should have been created separately,
 #using groupadd/useradd
-USER=liferay
-GROUP=liferay
+USER=<% = @user %>
+GROUP=<% = @group %>
 
 ###This is end of the configurable section for most cases, other variable definitions follow :
 
