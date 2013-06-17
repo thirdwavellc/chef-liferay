@@ -10,13 +10,14 @@
 # Short-Description: Liferay portal daemon.
 # Description:       Starts the Liferay portal.
 # Author:            Julien Rialland <julien.rialland@gmail.com>
+# Author:            Orin Fink <orin.fink@thirdwavellc.com>
 ### END INIT INFO
 
 #Display name of the application
-APP_NAME="Liferay 6.0.6"
+APP_NAME="Liferay"
 
 #Location of Liferay installation
-export LIFERAY_HOME=/var/liferay6
+export LIFERAY_HOME=/opt/liferay
 
 #unprivileged user that runs the daemon. The group/user should have been created separately,
 #using groupadd/useradd
@@ -37,7 +38,7 @@ TOMCAT_DIR=`ls "$LIFERAY_HOME" | grep tomcat | head -1`
 export CATALINA_HOME="$LIFERAY_HOME/$TOMCAT_DIR"
 
 #location of pid file
-export CATALINA_PID=/var/run/liferay.pid
+export CATALINA_PID=/run/liferay.pid
 
 # guess where is JAVA_HOME if needed (when then environment variable is not defined)
 JVM_DIRS="/usr/lib/jvm/java-6-openjdk /usr/lib/jvm/java-6-sun /usr/lib/jvm/default-java /usr/lib/jvm/java-1.5.0-sun /usr/usr/lib/j2sdk1.5-sun /usr/lib/j2sdk1.5-ibm"
@@ -99,8 +100,8 @@ function start {
         chmod -R ug=rwx "$LIFERAY_HOME"
 
         #ensure that pid file is writeable
-        mkdir `dirname "$CATALINA_PID"` 2>/dev/null
-        chmod ugo=rw `dirname "$CATALINA_PID"`
+        touch "$CATALINA_PID" 2>/dev/null
+        chmod ugo=rw "$CATALINA_PID"
 
         su "$USER" -c "$CATALINA_HOME/bin/catalina.sh start"
         status=$?
