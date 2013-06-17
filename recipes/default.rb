@@ -20,13 +20,12 @@
 # limitations under the License.
 #
 
-user node['liferay']['user'] do
-	comment "Liferay User"
-	home "/home/#{node['liferay']['user']}"
-end
 
-directory node['liferay']['download_directory'] do
-	action :create
+user node['liferay']['user'] do
+  comment "Liferay User"
+  home "/home/#{node['liferay']['user']}"
+  shell "/bin/bash"
+  supports :manage_home=>true
 end
 
 remote_file "#{node['liferay']['download_directory']}/#{node['liferay']['download_filename']}" do
