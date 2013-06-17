@@ -111,16 +111,11 @@ template "/etc/logrotate.d/liferay" do
 end
 
 directory "#{node['liferay']['install_directory']}/liferay/deploy" do
-	user node['liferay']['user']
-	action :create
-end
-
-#link "#{node['liferay']['install_directory']}/liferay/deploy" do
-#	to "/vagrant/dist"
-#end
-
-file "#{node['liferay']['install_directory']}/liferay/tomcat/conf/server.xml" do
-	action :delete
+  owner "#{node['liferay']['user']}"
+  group "#{node['liferay']['group']}"
+  mode 01755
+  action :create
+  recursive true
 end
 
 template "#{node['liferay']['install_directory']}/liferay/tomcat/conf/server.xml" do
