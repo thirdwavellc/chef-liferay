@@ -29,16 +29,32 @@ user node['liferay']['user'] do
 end
 
 remote_file "#{node['liferay']['download_directory']}/#{node['liferay']['download_filename']}" do
-	source node['liferay']['download_url']
-	mode 00755
-	action :create_if_missing
-	notifies :run, "bash[Extract Liferay]", :immediately
+  owner "#{node['liferay']['user']}"
+  group "#{node['liferay']['group']}"
+  source node['liferay']['download_url']
+  action :create_if_missing
+  notifies :run, "bash[Extract Liferay]", :immediately
 end
 
+
 bash "Extract Liferay" do
-	user "root"
-	code node['liferay']['extract_command']
-	action :nothing
+  cwd node['liferay']['download_directory']
+  user node['liferay']['user']
+  group node['liferay']['group']
+  code <<-EOH
+    unzip #{node['liferay']['download_filename']}
+    EOH
+  action :nothing
+  notifies :run, "bash[Move Liferay]", :immediately
+end
+
+bash "Move Liferay" do
+  cwd node['liferay']['download_directory']
+  user "root"
+  code <<-EOH
+    mv #{node['liferay']['download_version']} #{node['liferay']['install_directory']}
+    EOH
+  action :nothing
 end
 
 link "#{node['liferay']['install_directory']}/liferay" do
