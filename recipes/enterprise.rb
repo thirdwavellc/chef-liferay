@@ -22,7 +22,9 @@
 include_recipe "liferay"
 
 remote_file "#{node['liferay']['install_directory']}/liferay/deploy/#{node['liferay']['ee']['license_filename']}" do
-	source node['liferay']['ee']['license_url']
-	mode 00755
-	action :create_if_missing
+  owner "#{node['liferay']['user']}"
+  group "#{node['liferay']['group']}"
+  source node['liferay']['ee']['license_url']
+  mode 00755
+  action :create_if_missing
 end
