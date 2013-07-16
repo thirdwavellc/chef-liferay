@@ -64,3 +64,11 @@ default['liferay']['postgresql']['db_default'] = "lportal"
 default['liferay']['postgresql']['db_dev'] = "liferay_dev"
 default['liferay']['postgresql']['db_staging'] = "liferay_stage"
 default['liferay']['postgresql']['db_production'] = "liferay_prod"
+  
+# MySQL
+default['liferay']['mysql']['user'] = "liferay_user"
+default['liferay']['mysql']['user_password'] = "l1f3r4y$"
+default['liferay']['mysql']['db_default'] = "lportal"
+default['liferay']['mysql']['db_dev'] = "liferay_dev"
+default['liferay']['mysql']['db_staging'] = "liferay_stage"
+default['liferay']['mysql']['db_production'] = "liferay_prod"

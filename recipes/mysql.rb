@@ -23,7 +23,26 @@ mysql_connection_info = {:host => "localhost",
                          :username => 'root',
                          :password => node['mysql']['server_root_password']}
 
+# create the liferay mysql user but grant no privileges
+mysql_database_user node['liferay']['postgresql']['user'] do
+  connection mysql_connection_info
+  password node['liferay']['postgresql']['user_password']
+  action :create
+end
+
+                           
 mysql_database "lportal" do
 	connection mysql_connection_info
+  owner node['liferay']['postgresql']['user']
 	action :create
+end
+
+# grant select,update,insert privileges to all tables in lportal db from all hosts
+mysql_database_user node['liferay']['postgresql']['user'] do
+  connection mysql_connection_info
+  password node['liferay']['postgresql']['user_password']
+  database_name 'lportal'
+  host '%'
+  privileges [:all]
+  action :grant
 end
