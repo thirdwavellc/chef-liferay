@@ -77,6 +77,11 @@ end
 template "#{node['liferay']['install_directory']}/liferay/tomcat/bin/setenv.sh" do
   source "setenv.sh.erb"
   mode 01755
+  variables({
+    :max_memory => node['liferay']['tomcat']['max_memory'],
+    :min_memory => node['liferay']['tomcat']['min_memory'],
+    :max_perm_size => node['liferay']['tomcat']['max_perm_size']
+  })
 end
 
 directory "#{node['liferay']['install_directory']}/liferay/tomcat/webapps/welcome-theme" do

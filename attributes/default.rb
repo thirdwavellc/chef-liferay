@@ -56,7 +56,10 @@ default['liferay']['tomcat']['root_xml']['username'] = "test"
 default['liferay']['tomcat']['root_xml']['password'] = "test"
 default['liferay']['tomcat']['root_xml']['driver'] = "org.postgresql.Driver"
 default['liferay']['tomcat']['root_xml']['jdbc_url'] = "jdbc:postgresql://172.16.33.110:5432/lportal"
-
+default['liferay']['tomcat']['max_memory'] = "1024m"
+default['liferay']['tomcat']['min_memory'] = "1024m"
+default['liferay']['tomcat']['max_perm_size'] = "384m"
+  
 # PostgreSQL
 default['liferay']['postgresql']['user'] = "liferay_user"
 default['liferay']['postgresql']['user_password'] = "l1f3r4y$"
