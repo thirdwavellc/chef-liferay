@@ -31,7 +31,7 @@ mysql_database_user node['liferay']['postgresql']['user'] do
 end
 
                            
-mysql_database "lportal" do
+mysql_database node['liferay']['mysql']['db_default'] do
 	connection mysql_connection_info
   owner node['liferay']['postgresql']['user']
 	action :create
@@ -41,7 +41,7 @@ end
 mysql_database_user node['liferay']['postgresql']['user'] do
   connection mysql_connection_info
   password node['liferay']['postgresql']['user_password']
-  database_name 'lportal'
+  database_name node['liferay']['postgresql']['db_default']
   host '%'
   privileges [:all]
   action :grant
