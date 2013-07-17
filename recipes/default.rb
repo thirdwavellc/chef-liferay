@@ -172,10 +172,9 @@ bash "Load EXT Environment" do
 end
 
 bash "Start Liferay" do
-  user "#{node['liferay']['user']}"
   code <<-EOH
-    /etc/init.d/liferay stop  
-    /etc/init.d/liferay start
+    sudo /etc/init.d/liferay stop  
+    sudo /etc/init.d/liferay start
     EOH
   action :nothing
 end
