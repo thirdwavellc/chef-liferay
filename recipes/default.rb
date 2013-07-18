@@ -91,6 +91,10 @@ directory "#{node['liferay']['install_directory']}/liferay/tomcat/webapps/welcom
   action :delete
 end
 
+service "liferay" do
+  supports :restart => true
+end
+
 # Configure the Liferay Service and Log Rotations
 template "/etc/init.d/liferay" do
   source "init.d.liferay.erb"
@@ -100,14 +104,8 @@ template "/etc/init.d/liferay" do
     :user => node['liferay']['user'],
     :group => node['liferay']['group']
   })
-end
-
-link "/etc/rc1.d/K99liferay" do
-  to "/etc/init.d/liferay"
-end
-
-link "/etc/rc2.d/S99liferay" do
-  to "/etc/init.d/S99liferay"
+  notifies :enable, "service[liferay]", :delayed
+  notifies :start, "service[liferay]", :delayed
 end
 
 template "/etc/logrotate.d/liferay" do
