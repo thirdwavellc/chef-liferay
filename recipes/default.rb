@@ -160,26 +160,19 @@ if "#{node['liferay']['ee']['license_url']}" =~ /^#{URI::regexp}$/
   include_recipe "liferay::enterprise"
 end
 
-bash "Load EXT Environment" do
-  cwd "/home/#{node['liferay']['user']}/"
-  user node['liferay']['user']
-  group node['liferay']['group']
-  code <<-EOH
-    ant deploy-properties -buildfile #{node['liferay']['ext_buildfile']}
-    ant war -buildfile #{node['liferay']['ext_buildfile']}
-    mkdir -p dist
-    cp /vagrant/dist/*-ext-* dist/
-    chown -R #{node['liferay']['user']}:#{node['liferay']['group']} dist
-    cp dist/*-ext-* #{node['liferay']['install_directory']}/liferay/deploy/
-    EOH
-  action :run
-  notifies :run, "bash[Start Liferay]", :immediately
-end
-
-bash "Start Liferay" do
-  code <<-EOH
-    sudo /etc/init.d/liferay stop  
-    sudo /etc/init.d/liferay start
-    EOH
-  action :nothing
+if File.directory? "/vagrant/dist"
+  bash "Load EXT Environment" do
+    cwd "/home/#{node['liferay']['user']}/"
+    user node['liferay']['user']
+    group node['liferay']['group']
+    code <<-EOH
+      ant deploy-properties -buildfile #{node['liferay']['ext_buildfile']}
+      ant war -buildfile #{node['liferay']['ext_buildfile']}
+      mkdir -p dist
+      cp /vagrant/dist/*-ext-* dist/
+      chown -R #{node['liferay']['user']}:#{node['liferay']['group']} dist
+      cp dist/*-ext-* #{node['liferay']['install_directory']}/liferay/deploy/
+      EOH
+    action :run
+  end
 end
