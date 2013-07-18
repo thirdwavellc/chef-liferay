@@ -1,6 +1,6 @@
 <Context path="" crossContext="true">
 	<Resource
-        <% node['tomcat']['jndi_resource'].sort.each do |key, value| %>
+        <% node['tomcat']['root_xml']['jndi_resource'].sort.each do |key, value| %>
         <% next if value.nil? -%>
         <%= key %> = <%= value %>
         <% end %>
