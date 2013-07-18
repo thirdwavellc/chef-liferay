@@ -70,8 +70,10 @@ link "#{node['liferay']['install_directory']}/liferay/tomcat" do
   to "#{node['liferay']['install_directory']}/liferay/#{node['liferay']['tomcat_version']}"
 end
 
-file "#{node['liferay']['install_directory']}/liferay/tomcat/bin/*.bat" do
-  action :delete
+Dir.glob("#{node['liferay']['install_directory']}/liferay/tomcat/bin/*.bat").each do |bat_file|
+  file bat_file do
+    action :delete
+  end
 end
 
 template "#{node['liferay']['install_directory']}/liferay/tomcat/bin/setenv.sh" do
