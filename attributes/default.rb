@@ -51,14 +51,15 @@ default['liferay']['ee']['install_patch_command'] = "sh patching-tool.sh install
 
 # Tomcat
 default['liferay']['tomcat']['server_xml']['port'] = "8080"
-default['liferay']['tomcat']['root_xml']['dsn'] = "jdbc/lportal"
-default['liferay']['tomcat']['root_xml']['username'] = "test"
-default['liferay']['tomcat']['root_xml']['password'] = "test"
-default['liferay']['tomcat']['root_xml']['driver'] = "org.postgresql.Driver"
-default['liferay']['tomcat']['root_xml']['jdbc_url'] = "jdbc:postgresql://172.16.33.110:5432/lportal"
+default['liferay']['tomcat']['jndi_resource']['name'] = "jdbc/lportal"
+default['liferay']['tomcat']['jndi_resource']['username'] = "test"
+default['liferay']['tomcat']['jndi_resource']['password'] = "test"
+default['liferay']['tomcat']['jndi_resource']['driverClassName'] = "org.postgresql.Driver"
+default['liferay']['tomcat']['jndi_resource']['url'] = "jdbc:postgresql://172.16.33.110:5432/lportal"
 default['liferay']['tomcat']['max_memory'] = "1024m"
 default['liferay']['tomcat']['min_memory'] = "1024m"
 default['liferay']['tomcat']['max_perm_size'] = "384m"
+default['liferay']['tomcat']['jndi_resource']['name']
   
 # PostgreSQL
 default['liferay']['postgresql']['user'] = "liferay_user"

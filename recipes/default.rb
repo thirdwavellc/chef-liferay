@@ -146,13 +146,6 @@ template "#{node['liferay']['install_directory']}/liferay/tomcat/conf/Catalina/l
   mode 00755	
   owner "#{node['liferay']['user']}"
   group "#{node['liferay']['group']}"
-  variables({
-    :dsn => node[:liferay][:tomcat][:root_xml][:dsn],
-    :username => node[:liferay][:tomcat][:root_xml][:username],
-    :password => node[:liferay][:tomcat][:root_xml][:password],
-    :driver => node[:liferay][:tomcat][:root_xml][:driver],
-    :jdbc_url => node[:liferay][:tomcat][:root_xml][:jdbc_url]
-  })
 end
 
 if "#{node['liferay']['ee']['license_url']}" =~ /^#{URI::regexp}$/
