@@ -70,8 +70,10 @@ link "#{node['liferay']['install_directory']}/liferay/tomcat" do
   to "#{node['liferay']['install_directory']}/liferay/#{node['liferay']['tomcat_version']}"
 end
 
-file "#{node['liferay']['install_directory']}/liferay/tomcat/bin/*.bat" do
-  action :delete
+Dir.glob("#{node['liferay']['install_directory']}/liferay/tomcat/bin/*.bat").each do |bat_file|
+  file bat_file do
+    action :delete
+  end
 end
 
 template "#{node['liferay']['install_directory']}/liferay/tomcat/bin/setenv.sh" do
@@ -89,6 +91,10 @@ directory "#{node['liferay']['install_directory']}/liferay/tomcat/webapps/welcom
   action :delete
 end
 
+service "liferay" do
+  supports :restart => true
+end
+
 # Configure the Liferay Service and Log Rotations
 template "/etc/init.d/liferay" do
   source "init.d.liferay.erb"
@@ -98,14 +104,8 @@ template "/etc/init.d/liferay" do
     :user => node['liferay']['user'],
     :group => node['liferay']['group']
   })
-end
-
-link "/etc/rc1.d/K99liferay" do
-  to "/etc/init.d/liferay"
-end
-
-link "/etc/rc2.d/S99liferay" do
-  to "/etc/init.d/S99liferay"
+  notifies :enable, "service[liferay]", :delayed
+  notifies :start, "service[liferay]", :delayed
 end
 
 template "/etc/logrotate.d/liferay" do
@@ -153,26 +153,19 @@ if "#{node['liferay']['ee']['license_url']}" =~ /^#{URI::regexp}$/
   include_recipe "liferay::enterprise"
 end
 
-bash "Load EXT Environment" do
-  cwd "/home/#{node['liferay']['user']}/"
-  user node['liferay']['user']
-  group node['liferay']['group']
-  code <<-EOH
-    ant deploy-properties -buildfile #{node['liferay']['ext_buildfile']}
-    ant war -buildfile #{node['liferay']['ext_buildfile']}
-    mkdir -p dist
-    cp /vagrant/dist/*-ext-* dist/
-    chown -R #{node['liferay']['user']}:#{node['liferay']['group']} dist
-    cp dist/*-ext-* #{node['liferay']['install_directory']}/liferay/deploy/
-    EOH
-  action :run
-  notifies :run, "bash[Start Liferay]", :immediately
-end
-
-bash "Start Liferay" do
-  code <<-EOH
-    sudo /etc/init.d/liferay stop  
-    sudo /etc/init.d/liferay start
-    EOH
-  action :nothing
+if File.directory? "/vagrant/dist"
+  bash "Load EXT Environment" do
+    cwd "/home/#{node['liferay']['user']}/"
+    user node['liferay']['user']
+    group node['liferay']['group']
+    code <<-EOH
+      ant deploy-properties -buildfile #{node['liferay']['ext_buildfile']}
+      ant war -buildfile #{node['liferay']['ext_buildfile']}
+      mkdir -p dist
+      cp /vagrant/dist/*-ext-* dist/
+      chown -R #{node['liferay']['user']}:#{node['liferay']['group']} dist
+      cp dist/*-ext-* #{node['liferay']['install_directory']}/liferay/deploy/
+      EOH
+    action :run
+  end
 end
