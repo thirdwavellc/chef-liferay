@@ -3,14 +3,16 @@
 
 Vagrant.configure("2") do |config|
 
+  config.omnibus.chef_version = :latest
+
   config.berkshelf.enabled = true
 
   # Liferay Box
   config.vm.define :liferay do |liferay|
 
-    liferay.vm.box = "precise64"
+    liferay.vm.box = "opscode-precise64-provisionerless"
 
-    liferay.vm.box_url = "http://files.vagrantup.com/precise64.box"
+    liferay.vm.box_url = "https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box"
 
     liferay.vm.provider "virtualbox" do |v|
       v.name = "Liferay"
