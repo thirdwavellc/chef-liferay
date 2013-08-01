@@ -51,9 +51,6 @@ Vagrant.configure("2") do |config|
     postgres.vm.network :private_network, ip: "172.16.40.10"
 
     postgres.vm.provision :chef_solo do |chef|
-      chef.add_recipe "apt"
-      chef.add_recipe "database::postgresql"
-      chef.add_recipe "postgresql::server"
       chef.add_recipe "liferay::postgresql"
 
       chef.json = {

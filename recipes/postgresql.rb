@@ -19,6 +19,25 @@
 # limitations under the License.
 #
 
+include_recipe "apt"
+
+unless ENV['LANGUAGE'] == "en_US.UTF-8" && ENV['LANG'] == "en_US.UTF-8" && ENV['LC_ALL'] == "en_US.UTF-8"
+  execute "setup-locale" do
+    command "locale-gen en_US.UTF-8 && dpkg-reconfigure locales"
+    action :run
+  end
+
+  template "/etc/default/locale" do
+    source "locale.erb"
+    action :create
+  end
+
+  ENV['LANGUAGE'] = ENV['LANG'] = ENV['LC_ALL'] = "en_US.UTF-8"
+end
+
+include_recipe "postgresql::server"
+include_recipe "database::postgresql"
+
 postgresql_connection_info = {:host => "127.0.0.1",
                               :port => node['postgresql']['config']['port'],
                               :username => 'postgres',
