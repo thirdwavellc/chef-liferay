@@ -6,6 +6,7 @@ Vagrant.configure("2") do |config|
   config.omnibus.chef_version = :latest
 
   config.berkshelf.enabled = true
+  config.vm.provision :shell, :inline => "gem install chef --version 11.6.0 --no-rdoc --no-ri --conservative"
 
   # Liferay Box
   config.vm.define :liferay do |liferay|
