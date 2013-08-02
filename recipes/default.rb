@@ -21,6 +21,10 @@
 # limitations under the License.
 #
 
+include_recipe "apt"
+include_recipe "unzip"
+include_recipe "imagemagick"
+include_recipe "java"
 
 user node['liferay']['user'] do
   comment "Liferay User"

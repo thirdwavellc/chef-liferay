@@ -23,12 +23,7 @@ Vagrant.configure("2") do |config|
     liferay.vm.network :private_network, ip: "172.16.30.10"
 
     liferay.vm.provision :chef_solo do |chef|
-      chef.add_recipe "apt"
-      chef.add_recipe "unzip"
-      chef.add_recipe "imagemagick"
-      chef.add_recipe "java"
       chef.add_recipe "liferay"
-      chef.add_recipe "liferay::aliases"
       chef.add_recipe "mysql-connector::java"
     end
   end
