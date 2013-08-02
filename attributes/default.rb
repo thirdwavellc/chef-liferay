@@ -66,15 +66,18 @@ default['liferay']['tomcat']['jndi_resource']['name']
 # PostgreSQL
 default['liferay']['postgresql']['user'] = "liferay_user"
 default['liferay']['postgresql']['user_password'] = "l1f3r4y$"
-default['liferay']['postgresql']['db_default'] = "lportal"
-default['liferay']['postgresql']['db_dev'] = "liferay_dev"
-default['liferay']['postgresql']['db_staging'] = "liferay_stage"
-default['liferay']['postgresql']['db_production'] = "liferay_prod"
+default['liferay']['postgresql']['database']['default'] = "lportal"
+default['liferay']['postgresql']['database']['dev'] = "liferay_dev"
+default['liferay']['postgresql']['database']['staging'] = "liferay_stage"
+default['liferay']['postgresql']['database']['production'] = "liferay_prod"
   
 # MySQL
 default['liferay']['mysql']['user'] = "liferay_user"
 default['liferay']['mysql']['user_password'] = "l1f3r4y$"
-default['liferay']['mysql']['db_default'] = "lportal"
-default['liferay']['mysql']['db_dev'] = "liferay_dev"
-default['liferay']['mysql']['db_staging'] = "liferay_stage"
-default['liferay']['mysql']['db_production'] = "liferay_prod"
+default['liferay']['mysql']['database']['default'] = "lportal"
+default['liferay']['mysql']['database']['dev'] = "liferay_dev"
+default['liferay']['mysql']['database']['staging'] = "liferay_stage"
+default['liferay']['mysql']['database']['production'] = "liferay_prod"
+
+# EXT
+default['liferay']['load_ext'] = false

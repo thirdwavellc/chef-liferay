@@ -30,19 +30,21 @@ mysql_database_user node['liferay']['mysql']['user'] do
   action :create
 end
 
-                           
-mysql_database node['liferay']['mysql']['db_default'] do
-	connection mysql_connection_info
-  owner node['liferay']['mysql']['user']
-	action :create
-end
+# create databases
+node['liferay']['mysql']['database'].each do |db, name|
+  mysql_database name do
+  	connection mysql_connection_info
+    owner node['liferay']['mysql']['user']
+	  action :create
+  end
 
-# grant select,update,insert privileges to all tables in default db from all hosts
-mysql_database_user node['liferay']['mysql']['user'] do
-  connection mysql_connection_info
-  password node['liferay']['mysql']['user_password']
-  database_name node['liferay']['mysql']['db_default']
-  host '%'
-  privileges [:all]
-  action :grant
-end
+  # grant select,update,insert privileges to all tables in default db from all hosts
+  mysql_database_user node['liferay']['mysql']['user'] do
+    connection mysql_connection_info
+    password node['liferay']['mysql']['user_password']
+    database_name name 
+    host '%'
+    privileges [:all]
+    action :grant
+  end
+end				
