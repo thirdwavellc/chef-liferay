@@ -20,7 +20,7 @@
 # limitations under the License.
 #
 
-if not "#{node['liferay']['ee']['patching_tool_zip']}" == ""
+if not node['liferay']['ee']['patching_tool_zip'] == ""
 	directory "#{node['liferay']['install_directory']}/liferay/patching-tool" do
 		action :delete 
 		recursive true

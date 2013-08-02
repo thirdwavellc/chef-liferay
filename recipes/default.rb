@@ -34,8 +34,8 @@ user node['liferay']['user'] do
 end
 
 remote_file "#{node['liferay']['download_directory']}/#{node['liferay']['download_filename']}" do
-  owner "#{node['liferay']['user']}"
-  group "#{node['liferay']['group']}"
+  owner node['liferay']['user']
+  group node['liferay']['group']
   source node['liferay']['download_url']
   action :create_if_missing
   notifies :run, "bash[Extract Liferay]", :immediately
@@ -46,9 +46,7 @@ bash "Extract Liferay" do
   cwd node['liferay']['download_directory']
   user node['liferay']['user']
   group node['liferay']['group']
-  code <<-EOH
-    unzip #{node['liferay']['download_filename']}
-    EOH
+  code "unzip #{node['liferay']['download_filename']}"
   action :nothing
   notifies :run, "bash[Move Liferay]", :immediately
 end
@@ -56,21 +54,19 @@ end
 bash "Move Liferay" do
   cwd node['liferay']['download_directory']
   user "root"
-  code <<-EOH
-    mv #{node['liferay']['download_version']} #{node['liferay']['install_directory']}
-    EOH
+  code "mv #{node['liferay']['download_version']} #{node['liferay']['install_directory']}"
   action :nothing
 end
 
 link "#{node['liferay']['install_directory']}/liferay" do
-  owner "#{node['liferay']['user']}"
-  group "#{node['liferay']['group']}"
+  owner node['liferay']['user']
+  group node['liferay']['group']
   to "#{node['liferay']['install_directory']}/#{node['liferay']['download_version']}"
 end
 
 link "#{node['liferay']['install_directory']}/liferay/tomcat" do
-  owner "#{node['liferay']['user']}"
-  group "#{node['liferay']['group']}"
+  owner node['liferay']['user']
+  group node['liferay']['group']
   to "#{node['liferay']['install_directory']}/liferay/#{node['liferay']['tomcat_version']}"
 end
 
@@ -121,8 +117,8 @@ template "/etc/logrotate.d/liferay" do
 end
 
 directory "#{node['liferay']['install_directory']}/liferay/deploy" do
-  owner "#{node['liferay']['user']}"
-  group "#{node['liferay']['group']}"
+  owner node['liferay']['user']
+  group node['liferay']['group']
   mode 01755
   action :create
   recursive true
@@ -131,16 +127,16 @@ end
 template "#{node['liferay']['install_directory']}/liferay/tomcat/conf/server.xml" do
   source "server.xml.erb"
   mode 00755	
-  owner "#{node['liferay']['user']}"
-  group "#{node['liferay']['group']}"
+  owner node['liferay']['user']
+  group node['liferay']['group']
   variables({
-    :port => node[:liferay][:tomcat][:server_xml][:port]
+    :port => node['liferay']['tomcat']['server_xml']['port']
   })
 end
 
 directory "#{node['liferay']['install_directory']}/liferay/tomcat/conf/Catalina/localhost/" do
-  owner "#{node['liferay']['user']}"
-  group "#{node['liferay']['group']}"
+  owner node['liferay']['user']
+  group node['liferay']['group']
   mode 01755
   action :create
 end
@@ -148,11 +144,11 @@ end
 template "#{node['liferay']['install_directory']}/liferay/tomcat/conf/Catalina/localhost/ROOT.xml" do
   source "ROOT.xml.erb"
   mode 00755	
-  owner "#{node['liferay']['user']}"
-  group "#{node['liferay']['group']}"
+  owner node['liferay']['user']
+  group node['liferay']['group']
 end
 
-if "#{node['liferay']['ee']['license_url']}" =~ /^#{URI::regexp}$/
+if node['liferay']['ee']['license_url'] =~ /^#{URI::regexp}$/
   include_recipe "liferay::patches"	
   include_recipe "liferay::enterprise"
 end
