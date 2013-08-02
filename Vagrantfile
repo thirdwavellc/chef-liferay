@@ -36,9 +36,9 @@ Vagrant.configure("2") do |config|
   # PostgreSQL Box
   config.vm.define :postgres do |postgres|
 
-    postgres.vm.box = "precise64"
+    postgres.vm.box = "opscode-precise64-provisionerless"
 
-    postgres.vm.box_url = "http://files.vagrantup.com/precise64.box"
+    postgres.vm.box_url = "https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box"
 
     postgres.vm.provider "virtualbox" do |v|
 
@@ -88,12 +88,12 @@ Vagrant.configure("2") do |config|
   # MySQL Box
   config.vm.define :mysql do |mysql|
 
-    mysql.vm.box = "precise64"
+    mysql.vm.box = "opscode-precise64-provisionerless"
 
-    mysql.vm.box_url = "http://files.vagrantup.com/precise64.box"
+    mysql.vm.box_url = "https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box"
 
     mysql.vm.provider "virtualbox" do |v|
-      v.name = "IMSA MySQL"
+      v.name = "Liferay MySQL"
 
       v.customize  ["modifyvm", :id, "--memory", 1024]
     end
