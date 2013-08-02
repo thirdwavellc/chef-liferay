@@ -52,8 +52,8 @@ default['liferay']['ee']['install_patch_command'] = "sh patching-tool.sh install
 # Tomcat
 default['liferay']['tomcat']['server_xml']['port'] = "8080"
 default['liferay']['tomcat']['root_xml']['jndi_resource']['name'] = "jdbc/lportal"
-default['liferay']['tomcat']['root_xml']['jndi_resource']['auth'] = "Container",
-default['liferay']['tomcat']['root_xml']['jndi_resource']['type'] = "javax.sql.DataSource",
+default['liferay']['tomcat']['root_xml']['jndi_resource']['auth'] = "Container"
+default['liferay']['tomcat']['root_xml']['jndi_resource']['type'] = "javax.sql.DataSource"
 default['liferay']['tomcat']['root_xml']['jndi_resource']['username'] = "liferay_user"
 default['liferay']['tomcat']['root_xml']['jndi_resource']['password'] = "l1f3r4y$"
 default['liferay']['tomcat']['root_xml']['jndi_resource']['driverClassName'] = "org.postgresql.Driver"
