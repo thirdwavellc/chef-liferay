@@ -46,7 +46,11 @@ The Vagrantfile included in this repo should give you an idea of what a typical 
 
 **Tomcat**
 
-* `node['liferay']['tomcat']['server_xml']['port']` - Port Tomcat should run on
+* `node['liferay']['tomcat']['max_memory']` - Maximum size of the Java heap (-Xmx), in setenv.sh
+* `node['liferay']['tomcat']['min_memory']` - Initial and minimum size of Java heap (-Xms), in setenv.sh
+* `node['liferay']['tomcat']['max_perm_size']` -  Maximum size for the permanent generation space (-XX:MaxPermSize), in setenv.sh
+* `node['liferay']['tomcat']['server_xml']['port']` - Port Tomcat should run on, in server.xml
+
 * `node['liferay']['tomcat']['root_xml']['dsn']` - DSN to create
 * `node['liferay']['tomcat']['root_xml']['username']` - Username to create DSN
 * `node['liferay']['tomcat']['root_xml']['password']` - Password to create DSN
