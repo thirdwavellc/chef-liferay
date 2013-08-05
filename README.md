@@ -46,16 +46,30 @@ The Vagrantfile included in this repo should give you an idea of what a typical 
 
 **Tomcat**
 
-* `node['liferay']['tomcat']['max_memory']` - Maximum size of the Java heap (-Xmx), in setenv.sh
-* `node['liferay']['tomcat']['min_memory']` - Initial and minimum size of Java heap (-Xms), in setenv.sh
-* `node['liferay']['tomcat']['max_perm_size']` -  Maximum size for the permanent generation space (-XX:MaxPermSize), in setenv.sh
-* `node['liferay']['tomcat']['server_xml']['port']` - Port Tomcat should run on, in server.xml
+*Memory Settings in setenv.sh*
+* `node['liferay']['tomcat']['max_memory']` - Maximum size of the Java heap (-Xmx)
+* `node['liferay']['tomcat']['min_memory']` - Initial and minimum size of Java heap (-Xms)
+* `node['liferay']['tomcat']['max_perm_size']` -  Maximum size for the permanent generation space (-XX:MaxPermSize)
 
-* `node['liferay']['tomcat']['root_xml']['dsn']` - DSN to create
-* `node['liferay']['tomcat']['root_xml']['username']` - Username to create DSN
-* `node['liferay']['tomcat']['root_xml']['password']` - Password to create DSN
-* `node['liferay']['tomcat']['root_xml']['driver']` - Driver to use for DSN
-* `node['liferay']['tomcat']['root_xml']['jdbc_url']` - Location to access database
+*Port settings in server.xml*
+* `node['liferay']['tomcat']['server_xml']['port']` - The port Tomcat should run on
+
+*JNDI Resource in {tomcat-home}/conf/Catalina/localhost/ROOT.xml*
+* `node['liferay']['tomcat']['root_xml']['jndi_resource']` - Hash of JNDI Resource settings to use in ROOT.xml server context
+
+for example
+```json
+  :jndi_resource=>{
+    :name=>"jdbc/my_liferay",
+    :auth=>"Container",
+    :type=>"javax.sql.DataSource",
+    :factory=>"org.apache.tomcat.jdbc.pool.DataSourceFactory",
+    :username=>"liferay_user",
+    :password=>"mypassword",
+    :driverClassName=>"com.mysql.jdbc.Driver",
+    :url=>"jdbc:mysql://db.company.com:3306/lportal"
+  }
+```
 
 # Recipes
 
