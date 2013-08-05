@@ -39,15 +39,6 @@ The Vagrantfile included in this repo should give you an idea of what a typical 
 * `node['liferay']['download_url']` - Location of where to download Liferay
 * `node['liferay']['tomcat_version']` - Version of Tomcat
 
-**Commands**
-
-* `node['liferay']['extract_command']` - Command to extract Liferay download
-* `node['liferay']['start_command']` - Command to start the Tomcat server
-* `node['liferay']['stop_command']` - Command to stop the Tomcat server
-* `node['liferay']['install_marketplace_plugins_command']` - Command to install any plugins
-* `node['liferay']['move_patch_command']` - Command to move patches for deployment
-* `node['liferay']['install_patch_command']` - Command to install patches
-
 **Enterprise Edition**
 
 * `node['liferay']['ee']['license_filename']` - Filename for developer license
