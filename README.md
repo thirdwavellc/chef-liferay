@@ -68,6 +68,7 @@ The Vagrantfile included in this repo should give you an idea of what a typical 
 
 * Author:: Adam Krone <adam.krone@thirdwavellc.com>
 * Author:: Henry Kastler <henry.kastler@thirdwavellc.com>
+* Author:: Orin Fink <orin.fink@thirdwavellc.com>
 
 * Copyright:: 2013, Thirdwave, LLC
 
