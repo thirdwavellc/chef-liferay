@@ -25,6 +25,17 @@ Vagrant.configure("2") do |config|
     liferay.vm.provision :chef_solo do |chef|
       chef.add_recipe "liferay"
       chef.add_recipe "mysql-connector::java"
+      chef.json = {
+        :java => {
+          :install_flavor => "oracle",
+          :jdk_version => "6",
+          :java_home => "/usr/lib/default-java",
+          :oracle => {
+            :accept_oracle_download_terms => true
+          }
+        }
+      }
+    
     end
   end
 
