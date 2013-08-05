@@ -41,7 +41,6 @@ remote_file "#{node['liferay']['download_directory']}/#{node['liferay']['downloa
   notifies :run, "bash[Extract Liferay]", :immediately
 end
 
-
 bash "Extract Liferay" do
   cwd node['liferay']['download_directory']
   user node['liferay']['user']

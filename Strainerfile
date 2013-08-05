@@ -1,0 +1,2 @@
+foodcritic: bundle exec foodcritic --epic-fail any $SANDBOX/$COOKBOOK
+chefspec:   bundle exec rspec --color
