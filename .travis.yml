@@ -8,4 +8,3 @@ notifications:
     recipients:
       - adam.krone@thirdwavellc.com
     on_success: always
-script: bundle exec strainer test
