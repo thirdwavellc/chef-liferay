@@ -10,9 +10,9 @@ Vagrant.configure("2") do |config|
   # Liferay Box
   config.vm.define :liferay do |liferay|
 
-    liferay.vm.box = "opscode-centos-6.4-provisionerless"
+    liferay.vm.box = "opscode-precise64-provisionerless"
 
-    liferay.vm.box_url = "https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_centos-6.4_provisionerless.box"
+    liferay.vm.box_url = "https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box"
 
     liferay.vm.provider "virtualbox" do |v|
       v.name = "Liferay"
