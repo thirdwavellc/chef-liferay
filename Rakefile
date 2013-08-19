@@ -1,8 +1,8 @@
 task :default=> [
   :foodcritic,
-  :berks,
-  :knife,
-  :chefspec
+  #:berks,
+  #:knife,
+  #:chefspec
 ]
 
 desc "Berksfile install"
