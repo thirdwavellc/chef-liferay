@@ -21,7 +21,11 @@
 # limitations under the License.
 #
 
-include_recipe "apt"
+case node['platform_family']
+when "debian"
+  include_recipe "apt"
+end
+
 include_recipe "unzip"
 include_recipe "imagemagick"
 include_recipe "java"

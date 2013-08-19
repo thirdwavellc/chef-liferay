@@ -17,7 +17,7 @@
 APP_NAME="Liferay"
 
 #Location of Liferay installation
-export LIFERAY_HOME=<%= @liferay_home%>
+export LIFERAY_HOME=<%= @liferay_home %>
 
 #unprivileged user that runs the daemon. The group/user should have been created separately,
 #using groupadd/useradd
@@ -34,37 +34,13 @@ fi
 
 #tomcat directory
 #detection of the tomcat directory within liferay
-TOMCAT_DIR=`ls "$LIFERAY_HOME" | grep tomcat | head -1`
+TOMCAT_DIR=tomcat
 export CATALINA_HOME="$LIFERAY_HOME/$TOMCAT_DIR"
 
 #location of pid file
-export CATALINA_PID=/run/liferay.pid
+export CATALINA_PID=/var/run/liferay.pid
 
-# guess where is JAVA_HOME if needed (when then environment variable is not defined)
-JVM_DIRS="/usr/lib/jvm/java-6-openjdk /usr/lib/jvm/java-6-sun /usr/lib/jvm/default-java /usr/lib/jvm/java-1.5.0-sun /usr/usr/lib/j2sdk1.5-sun /usr/lib/j2sdk1.5-ibm"
-if [ -z "$JAVA_HOME" ]; then
-        for jdir in $JVM_DIRS; do
-                if [ -r "$jdir/bin/java" -a -z "${JAVA_HOME}" ]; then
-                        export JAVA_HOME="$jdir"
-                fi
-        done
-fi
-
-#if JAVA_HOME is still undefined, try to get it by resolving the path to the java program
-if [ -z "$JAVA_HOME" ]; then
-        javaexe=`which java`
-        if [ ! -z "$javaexe" ]; then
-                javaexe=`readlink -m "$javaexe"`
-                jdir="$javaexe/.."
-                export JAVA_HOME=`readlink -m "$jdir"`
-        fi
-fi
-
-#if JAVA_HOME is still undefined, crash the script
-if [ -z "$JAVA_HOME" ]; then
-    echo 'The JAVA_HOME environment variable could not be determined !'
-    exit 1
-fi
+export JAVA_HOME=<%= node['java']['java_home'] %>
 
 #extra jvm configuration : enable jmx
 #export JAVA_OPTS="$JAVA_OPTS -Dcom.sun.management.jmxremote.port=9999 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false"
@@ -82,11 +58,21 @@ if [ "$?" -ne "0" ]; then
 fi
 
 #load utility functions from Linux Standard Base
+<% case node['platform_family'] %>
+<% when "debian" %> 
 . /lib/lsb/init-functions
+<% when "rhel" %>
+. /etc/init.d/functions
+<% end %>
 
 #starts the daemon service
 function start {
+    <% case node['platform_family'] %>
+    <% when "debian" %>
         log_daemon_msg "Starting $APP_NAME"
+    <% when "rhel" %>
+        echo "Starting $APP_NAME"
+    <% end %>
 
         #create work directory if non-existent
         mkdir $CATALINA_HOME/work 2>/dev/null
@@ -105,21 +91,36 @@ function start {
 
         su "$USER" -c "$CATALINA_HOME/bin/catalina.sh start"
         status=$?
-
+    
+    <% case node['platform_family'] %>
+    <% when "debian" %>
         log_end_msg $status
+    <% end %>
+
         exit $status
 }
 
 #stops the daemon service
 function stop {
-        log_daemon_msg "Stopping $APP_NAME"
+    <% case node['platform_family'] %>
+    <% when "debian" %>
+        echo "Stopping $APP_NAME"
+    <% when "rhel" %>
+        echo "Stopping $APP_NAME"
+    <% end %>
+
         if [ ! -f "$CATALINA_PID" ];then
             echo "file $CATALINA_PID is missing !"
             unset CATALINA_PID
         fi
-        su "$USER" -c "$CATALINA_HOME/bin/catalina.sh stop 10 -force"
+        su "$USER" -c "$CATALINA_HOME/bin/catalina.sh stop 15"
         status=$?
+
+    <% case node['platform_family'] %>
+    <% when "debian" %>
         log_end_msg $status
+    <% end %>
+
         if [ "$status" = "0" ];then
             rm -f "$CATALINA_PID"
         fi
