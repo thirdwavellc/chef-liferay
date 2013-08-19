@@ -13,7 +13,7 @@
 
 # Platforms
 
-Currently only tested on Ubuntu 12.04, but should play nice within the Debian family.
+Tested on Ubuntu 12.04, but should play nice within the Debian family. Initial support for RHEL distros has been added, but is not as thoroughly tested at the moment.
 
 # Usage
 
