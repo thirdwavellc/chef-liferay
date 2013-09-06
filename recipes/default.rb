@@ -151,11 +151,6 @@ template "#{node['liferay']['install_directory']}/liferay/tomcat/conf/Catalina/l
   group node['liferay']['group']
 end
 
-if node['liferay']['ee']['license_url'] =~ /^#{URI::regexp}$/
-  include_recipe "liferay::patches"	
-  include_recipe "liferay::enterprise"
-end
-
 bash "Load EXT Environment" do
   cwd "/home/#{node['liferay']['user']}/"
 	user node['liferay']['user']
