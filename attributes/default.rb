@@ -61,6 +61,7 @@ default['liferay']['tomcat']['root_xml']['jndi_resource']['url'] = "jdbc:postgre
 default['liferay']['tomcat']['max_memory'] = "1024m"
 default['liferay']['tomcat']['min_memory'] = "1024m"
 default['liferay']['tomcat']['max_perm_size'] = "384m"
+default['liferay']['tomcat']['additional_java_ops'] = ""
 default['liferay']['tomcat']['jndi_resource']['name']
   
 # PostgreSQL
