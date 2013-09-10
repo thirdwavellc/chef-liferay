@@ -86,6 +86,7 @@ template "#{node['liferay']['install_directory']}/liferay/tomcat/bin/setenv.sh" 
     :max_memory => node['liferay']['tomcat']['max_memory'],
     :min_memory => node['liferay']['tomcat']['min_memory'],
     :max_perm_size => node['liferay']['tomcat']['max_perm_size']
+    :additional_java_ops => node['liferay']['tomcat']['additional_java_ops']
   })
 end
 
