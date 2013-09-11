@@ -1,1 +1,1 @@
-JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF8 -Dorg.apache.catalina.loader.WebappClassLoader.ENABLE_CLEAR_REFERENCES=false -Duser.timezone=GMT -Dcompany-id-properties=true -Xms<%= @min_memory %> -Xmx<%= @max_memory %> -XX:MaxPermSize=<%= @max_perm_size %> <%= @additional_java_ops %>"
+JAVA_OPTS="$JAVA_OPTS <%= @java_opts %>"
