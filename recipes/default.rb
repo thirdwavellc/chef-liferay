@@ -83,10 +83,7 @@ template "#{node['liferay']['install_directory']}/liferay/tomcat/bin/setenv.sh" 
   source "setenv.sh.erb"
   mode 01755
   variables({
-    :max_memory => node['liferay']['tomcat']['max_memory'],
-    :min_memory => node['liferay']['tomcat']['min_memory'],
-    :max_perm_size => node['liferay']['tomcat']['max_perm_size'],
-    :additional_java_ops => node['liferay']['tomcat']['additional_java_ops']
+    :java_opts => node['liferay']['tomcat']['setenv']['java_opts'].map {|k,v| "#{k}=#{v}" }.join(" ")
   })
 end
 

@@ -58,10 +58,13 @@ default['liferay']['tomcat']['root_xml']['jndi_resource']['username'] = "liferay
 default['liferay']['tomcat']['root_xml']['jndi_resource']['password'] = "l1f3r4y$"
 default['liferay']['tomcat']['root_xml']['jndi_resource']['driverClassName'] = "org.postgresql.Driver"
 default['liferay']['tomcat']['root_xml']['jndi_resource']['url'] = "jdbc:postgresql://localhost:5432/lportal"
-default['liferay']['tomcat']['max_memory'] = "1024m"
-default['liferay']['tomcat']['min_memory'] = "1024m"
-default['liferay']['tomcat']['max_perm_size'] = "384m"
-default['liferay']['tomcat']['additional_java_ops'] = ""
+default['liferay']['tomcat']['setenv']['java_opts']['-Dfile.encoding'] = "UTF8"
+default['liferay']['tomcat']['setenv']['java_opts']['-Dorg.apache.catalina.loader.WebappClassLoader.ENABLE_CLEAR_REFERENCES'] = "false"
+default['liferay']['tomcat']['setenv']['java_opts']['-Duser.timezone'] = "GMT"
+default['liferay']['tomcat']['setenv']['java_opts']['-Dcompany-id-properties'] = "true"
+default['liferay']['tomcat']['setenv']['java_opts']['-Xms'] = "1024m"
+default['liferay']['tomcat']['setenv']['java_opts']['-Xmx'] = "1024m"
+default['liferay']['tomcat']['setenv']['java_opts']['-XX:MaxPermSize'] = "384m"
 default['liferay']['tomcat']['jndi_resource']['name']
   
 # PostgreSQL
