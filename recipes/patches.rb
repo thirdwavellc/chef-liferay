@@ -44,8 +44,8 @@ end
 template "#{node['liferay']['install_directory']}/liferay/patching-tool/default.properties" do
 	source "patching_tool.default.properties.erb"
 	mode 00755	
-	owner "#{node['liferay']['user']}"
-	group "#{node['liferay']['group']}"	
+	owner node['liferay']['user']
+	group node['liferay']['group']	
 end
 
 execute "patching tool install" do
