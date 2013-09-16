@@ -46,8 +46,6 @@ default['liferay']['copy_ecj'] = "cp /vagrant/lib/ecj.jar /usr/share/ant/lib/ecj
 default['liferay']['ee']['license_filename'] = "your-license-here"
 default['liferay']['ee']['license_url'] = "your-license-here"
 default['liferay']['ee']['patching_tool_zip'] = ""
-default['liferay']['ee']['move_patch_command'] = "cp /vagrant/downloads/patches/* #{liferay['install_directory']}/liferay/patching-tool/patches/"
-default['liferay']['ee']['install_patch_command'] = "sh patching-tool.sh install"
 
 # Tomcat
 default['liferay']['tomcat']['server_xml']['port'] = "8080"

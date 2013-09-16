@@ -27,28 +27,27 @@ if not node['liferay']['ee']['patching_tool_zip'] == ""
 	end
 
 	execute "copy over patching tool #{node['liferay']['ee']['patching_tool_zip']}" do
-		command "sudo cp /vagrant/downloads/patching-tool/#{node['liferay']['ee']['patching_tool_zip']} #{node['liferay']['install_directory']}/liferay/#{node['liferay']['ee']['patching_tool_zip']}"
+		command "sudo -u #{node['liferay']['user']} cp /vagrant/downloads/patching-tool/#{node['liferay']['ee']['patching_tool_zip']} #{node['liferay']['install_directory']}/liferay/#{node['liferay']['ee']['patching_tool_zip']}"
 	end	
 
 	execute "extract #{node['liferay']['ee']['patching_tool_zip']}" do
 		cwd "#{node['liferay']['install_directory']}/liferay/"
-		command "sudo unzip -o #{node['liferay']['ee']['patching_tool_zip']}"
+		command "sudo -u #{node['liferay']['user']} unzip -o #{node['liferay']['ee']['patching_tool_zip']}"
 	end
 end
 
-bash "copy over patches" do
-	code node['liferay']['ee']['move_patch_command']
-	action :run
+execute "copy over patches" do
+	command "sudo -u #{node['liferay']['user']} cp /vagrant/downloads/patches/* #{node['liferay']['install_directory']}/liferay/patching-tool/patches/"
 end
 
 #create this file needed for the patch install
 template "#{node['liferay']['install_directory']}/liferay/patching-tool/default.properties" do
 	source "patching_tool.default.properties.erb"
 	mode 00755	
-	owner "liferay"
-	group "liferay"	
+	owner "#{node['liferay']['user']}"
+	group "#{node['liferay']['group']}"	
 end
 
 execute "patching tool install" do
-	command "sudo sh #{node['liferay']['install_directory']}/liferay/patching-tool/patching-tool.sh install"
+	command "sudo -u #{node['liferay']['user']} sh #{node['liferay']['install_directory']}/liferay/patching-tool/patching-tool.sh install"
 end
