@@ -157,6 +157,7 @@ bash "Load EXT Environment" do
 	user node['liferay']['user']
   group node['liferay']['group']
   code <<-EOH
+    #{node['liferay']['copy_ecj']}
     ant deploy-properties -buildfile #{node['liferay']['ext_buildfile']}
     ant war -buildfile #{node['liferay']['ext_buildfile']}
     mkdir -p dist
