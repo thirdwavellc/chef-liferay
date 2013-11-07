@@ -67,6 +67,12 @@ link "#{node['liferay']['install_directory']}/liferay" do
   to "#{node['liferay']['install_directory']}/#{node['liferay']['download_version']}"
 end
 
+link "/bundles" do
+  owner node['liferay']['user']
+  group node['liferay']['group']
+  to "#{node['liferay']['install_directory']}/#{node['liferay']['download_version']}"
+end
+
 link "#{node['liferay']['install_directory']}/liferay/tomcat" do
   owner node['liferay']['user']
   group node['liferay']['group']
