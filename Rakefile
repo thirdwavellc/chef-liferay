@@ -1,8 +1,8 @@
 task :default=> [
   :foodcritic,
-  #:berks,
-  #:knife,
-  #:chefspec
+  :berks,
+  :knife,
+  :chefspec
 ]
 
 desc "Berksfile install"
@@ -13,7 +13,7 @@ end
 
 desc "Foodcritic linting"
 task :foodcritic do
-  sh "foodcritic . -f any -f ~FC033"
+  sh "foodcritic . -f any"
 end
 
 desc "Knife test"
