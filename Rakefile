@@ -1,7 +1,6 @@
 task :default=> [
   :foodcritic,
   :berks,
-  :knife,
   :chefspec
 ]
 
@@ -14,11 +13,6 @@ end
 desc "Foodcritic linting"
 task :foodcritic do
   sh "foodcritic . -f any"
-end
-
-desc "Knife test"
-task :knife do
-  sh "bundle exec knife cookbook test liferay -o vendor/cookbooks"
 end
 
 desc "ChefSpec Unit Tests"
