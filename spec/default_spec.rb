@@ -7,6 +7,10 @@ describe 'liferay::default' do
   let (:liferay_zip) { chef_run.remote_file('/home/liferay/liferay-portal-tomcat-6.1.1-ce-ga2-20120731132656558.zip') }
   #let (:extract_liferay) { chef_run.bash('Extract Liferay') }
 
+  before do
+    stub_command("update-alternatives --display java | grep '/usr/lib/jvm/java-6-openjdk-amd64/jre/bin/java - priority 1061'").and_return(true)
+  end
+
   it 'should include apt::default' do
     expect(chef_run).to include_recipe 'apt::default'
   end
