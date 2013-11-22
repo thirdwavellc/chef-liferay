@@ -1,7 +1,7 @@
 task :default=> [
   :foodcritic,
   :berks,
-  :knife,
+  #:knife,
   :chefspec
 ]
 
