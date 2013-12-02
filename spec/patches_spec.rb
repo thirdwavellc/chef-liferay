@@ -11,17 +11,14 @@ describe 'liferay::patches' do
     end
 
     it 'should delete the existing patching tool' do
-      pending("node attributes don't appear to be overriding correctly")
       expect(chef_run).to delete_directory('/opt/liferay/patching-tool')
     end
 
     it 'should copy the new patching tool' do
-      pending("node attributes don't appear to be overriding correctly")
       expect(chef_run).to run_execute('copy over patching tool patching-tool.zip')
     end
 
     it 'should extract the new patching tool' do
-      pending("node attributes don't appear to be overriding correctly")
       expect(chef_run).to run_execute('extract patching-tool.zip')
     end
   end

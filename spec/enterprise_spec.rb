@@ -1,12 +1,18 @@
 require 'chefspec'
 
 describe 'liferay::enterprise' do
+  let(:liferay_ee_zip_filename) { 'liferay-ee.zip' }
   let(:liferay_ee_zip_url) { 'http://www.example.com/liferay-ee.zip' }
-  let(:liferay_ee_license_url) { 'http://www.example.com/license' }
+  let(:liferay_ee_zip_location) { "/home/liferay/#{liferay_ee_zip_filename}" }
+  let(:liferay_ee_license_filename) { 'license' }
+  let(:liferay_ee_license_url) { "http://www.example.com/#{liferay_ee_license_filename}" }
+  let(:liferay_ee_license_location) { '/opt/liferay/deploy/license'}
   let (:chef_run) do
-    runner = ChefSpec::Runner.new(platform: 'ubuntu', version: '12.04') do |node|
+    ChefSpec::Runner.new(platform: 'ubuntu', version: '12.04') do |node|
+      node.set['liferay']['download_filename'] = liferay_ee_zip_filename
       node.set['liferay']['download_url'] = liferay_ee_zip_url
-      node.set['liferay']['ee']['license_url'] = liferay_ee_license_url
+      node.set['liferay']['ee']['license_filename'] = liferay_ee_license_filename
+	  node.set['liferay']['ee']['license_url'] = liferay_ee_license_url
     end.converge(described_recipe)
   end
 
@@ -19,12 +25,10 @@ describe 'liferay::enterprise' do
   end
 
   it 'should download the liferay ee zip' do
-    pending("node attributes don't appear to be overriding correctly")
-    expect(chef_run).to create_remote_file_if_missing liferay_ee_zip_url
+    expect(chef_run).to create_remote_file_if_missing liferay_ee_zip_location
   end
 
   it 'should download the liferay license zip' do
-    pending("node attributes don't appear to be overriding correctly")
-    expect(chef_run).to create_remote_file_if_missing liferay_ee_license_url
+    expect(chef_run).to create_remote_file_if_missing liferay_ee_license_location
   end
 end

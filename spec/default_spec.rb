@@ -2,8 +2,9 @@ require 'spec_helper'
 
 describe 'liferay::default' do
   let (:chef_run) { runner = ChefSpec::Runner.new(platform: 'ubuntu', version: '12.04').converge(described_recipe) }
-  let(:liferay_zip_url) { '/home/liferay/liferay-portal-tomcat-6.1.1-ce-ga2-20120731132656558.zip' }
-  let (:liferay_zip) { chef_run.remote_file(liferay_zip_url) }
+  let(:liferay_zip_url) { 'http://downloads.sourceforge.net/project/lportal/Liferay%20Portal/6.1.1%20GA2/liferay-portal-tomcat-6.1.1-ce-ga2-20120731132656558.zip' }
+  let(:liferay_zip_location) { '/home/liferay/liferay-portal-tomcat-6.1.1-ce-ga2-20120731132656558.zip' }
+  let (:liferay_zip) { chef_run.remote_file(liferay_zip_location) }
   let (:extract_liferay) { chef_run.bash('Extract Liferay') }
   let(:liferay_init_template) { chef_run.template('/etc/init.d/liferay') }
 
@@ -28,7 +29,7 @@ describe 'liferay::default' do
   end
 
   it 'should download the liferay zip' do
-    expect(chef_run).to create_remote_file_if_missing liferay_zip_url
+    expect(chef_run).to create_remote_file_if_missing liferay_zip_location
   end
 
   it 'should notify bash[Extract Liferay]' do
@@ -94,7 +95,7 @@ describe 'liferay::default' do
 
   describe 'when load_ext is true' do
     let (:chef_run) do
-      runner = ChefSpec::Runner.new(platform: 'ubuntu', version: '12.04') do |node|
+      ChefSpec::Runner.new(platform: 'ubuntu', version: '12.04') do |node|
         node.set['liferay']['load_ext'] = true
       end.converge(described_recipe)
     end
@@ -107,14 +108,13 @@ describe 'liferay::default' do
   describe 'when using a custom liferay zip' do
     let(:liferay_zip_url) { 'http://example.com/custom.zip' }
     let(:chef_run) do
-      runner = ChefSpec::Runner.new(platform: 'ubuntu', version: '12.04') do |node|
+      ChefSpec::Runner.new(platform: 'ubuntu', version: '12.04') do |node|
         node.set['liferay']['download_url'] = liferay_zip_url
       end.converge(described_recipe)
     end
 
     it 'should download the custom zip' do
-      pending("node attributes don't appear to be overriding correctly")
-      expect(chef_run).to create_remote_file_if_missing liferay_zip_url
+      expect(chef_run).to create_remote_file_if_missing liferay_zip_location
     end
   end
 end
