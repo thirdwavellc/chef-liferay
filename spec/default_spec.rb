@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 describe 'liferay::default' do
-  let (:chef_run) do
-    runner = ChefSpec::Runner.new(platform: 'ubuntu', version: '12.04').converge(described_recipe)
-  end
-  let (:liferay_zip) { chef_run.remote_file('/home/liferay/liferay-portal-tomcat-6.1.1-ce-ga2-20120731132656558.zip') }
-  #let (:extract_liferay) { chef_run.bash('Extract Liferay') }
+  let (:chef_run) { runner = ChefSpec::Runner.new(platform: 'ubuntu', version: '12.04').converge(described_recipe) }
+  let(:liferay_zip_url) { '/home/liferay/liferay-portal-tomcat-6.1.1-ce-ga2-20120731132656558.zip' }
+  let (:liferay_zip) { chef_run.remote_file(liferay_zip_url) }
+  let (:extract_liferay) { chef_run.bash('Extract Liferay') }
+  let(:liferay_init_template) { chef_run.template('/etc/init.d/liferay') }
 
   before do
     stub_command("update-alternatives --display java | grep '/usr/lib/jvm/java-6-openjdk-amd64/jre/bin/java - priority 1061'").and_return(true)
@@ -28,24 +28,24 @@ describe 'liferay::default' do
   end
 
   it 'should download the liferay zip' do
-    expect(chef_run).to create_remote_file_if_missing '/home/liferay/liferay-portal-tomcat-6.1.1-ce-ga2-20120731132656558.zip'
+    expect(chef_run).to create_remote_file_if_missing liferay_zip_url
   end
 
-  it 'should notify Extract Liferay' do
+  it 'should notify bash[Extract Liferay]' do
     expect(liferay_zip).to notify('bash[Extract Liferay]').to(:run)
   end
 
-  it 'should notify Move Liferay' do
+  it 'should notify bash[Move Liferay]' do
     pending("not sure how to define extract_liferay for notifications")
     expect(extract_liferay).to notify('[Move Liferay]').to(:run)
   end
 
-  it 'should create liferay-versioned directory' do
+  it 'should create liferay directory link' do
     expect(chef_run).to create_link '/opt/liferay'
     expect(chef_run.link('/opt/liferay')).to link_to "/opt/liferay-portal-6.1.1-ce-ga2"
   end
 
-  it 'should create tomcat-versioned directory' do
+  it 'should create tomcat directory link' do
     expect(chef_run).to create_link '/opt/liferay/tomcat'
     expect(chef_run.link('/opt/liferay/tomcat')).to link_to '/opt/liferay/tomcat-7.0.27'
   end
@@ -62,13 +62,17 @@ describe 'liferay::default' do
 
   it 'should create liferay init script' do
     expect(chef_run).to render_file '/etc/init.d/liferay'
-
-    resource = chef_run.template('/etc/init.d/liferay')
-    expect(resource).to notify('service[liferay]').to(:enable)
-    expect(resource).to notify('service[liferay]').to(:start)
   end
 
-  it 'should create the liferay logrote' do
+  it 'should notify service[liferay] to enable, delayed' do
+    expect(liferay_init_template).to notify('service[liferay]').to(:enable).delayed
+  end
+
+  it 'should notify service[liferay] to start, delayed' do
+    expect(liferay_init_template).to notify('service[liferay]').to(:start).delayed
+  end
+
+  it 'should create the liferay logrotate' do
     expect(chef_run).to render_file '/etc/logrotate.d/liferay'
   end
 
@@ -97,6 +101,20 @@ describe 'liferay::default' do
 
     it 'should load the EXT environment' do
       expect(chef_run).to run_bash 'Load EXT Environment'
+    end
+  end
+
+  describe 'when using a custom liferay zip' do
+    let(:liferay_zip_url) { 'http://example.com/custom.zip' }
+    let(:chef_run) do
+      runner = ChefSpec::Runner.new(platform: 'ubuntu', version: '12.04') do |node|
+        node.set['liferay']['download_url'] = liferay_zip_url
+      end.converge(described_recipe)
+    end
+
+    it 'should download the custom zip' do
+      pending("node attributes don't appear to be overriding correctly")
+      expect(chef_run).to create_remote_file_if_missing liferay_zip_url
     end
   end
 end
