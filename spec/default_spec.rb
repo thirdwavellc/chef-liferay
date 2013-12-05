@@ -125,10 +125,14 @@ describe 'liferay::default' do
   describe 'when running a non-debian system' do
     let(:chef_run) do
       ChefSpec::Runner.new(platform: 'centos', version: '6.4').converge(described_recipe)
-	end
+    end
 
-	it 'should not include apt::default' do
+    before do
+      stub_command("update-alternatives --display java | grep '/usr/lib/jvm/java-6-openjdk-amd64/jre/bin/java - priority 1061'").and_return(true)
+    end
+
+    it 'should not include apt::default' do
       expect(chef_run).not_to include_recipe('apt::default')
-	end
+    end
   end
 end
