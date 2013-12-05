@@ -93,6 +93,10 @@ describe 'liferay::default' do
     expect(chef_run).to render_file '/opt/liferay/tomcat/conf/Catalina/localhost/ROOT.xml'
   end
 
+  it 'should not load the EXT environment' do
+    expect(chef_run).not_to run_bash 'Load EXT Environment'
+  end
+
   describe 'when load_ext is true' do
     let (:chef_run) do
       ChefSpec::Runner.new(platform: 'ubuntu', version: '12.04') do |node|
@@ -116,5 +120,15 @@ describe 'liferay::default' do
     it 'should download the custom zip' do
       expect(chef_run).to create_remote_file_if_missing liferay_zip_location
     end
+  end
+
+  describe 'when running a non-debian system' do
+    let(:chef_run) do
+      ChefSpec::Runner.new(platform: 'centos', version: '6.4').converge(described_recipe)
+	end
+
+	it 'should not include apt::default' do
+      expect(chef_run).not_to include_recipe('apt::default')
+	end
   end
 end
