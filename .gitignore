@@ -2,3 +2,5 @@
 Berksfile.lock
 Gemfile.lock
 vendor/cookbooks
+.kitchen/
+.kitchen.local.yml
