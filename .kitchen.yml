@@ -11,9 +11,14 @@ provisioner:
   name: chef_solo
 
 platforms:
+  - name: ubuntu-13.10
+  - name: ubuntu-13.04
+  - name: ubuntu-12.10
   - name: ubuntu-12.04
   - name: ubuntu-10.04
+  - name: centos-6.5
   - name: centos-6.4
+  - name: centos-5.10
 
 suites:
   - name: default
