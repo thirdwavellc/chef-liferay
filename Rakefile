@@ -12,7 +12,7 @@ end
 
 desc "Foodcritic linting"
 task :foodcritic do
-  sh " bundle exec foodcritic . -f any"
+  sh " bundle exec foodcritic . -f correctness"
 end
 
 desc "ChefSpec Unit Tests"
