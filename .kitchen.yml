@@ -23,8 +23,8 @@ suites:
       - recipe[liferay::default]
     attributes:
       java:
-	install_flavor: "oracle"
-	jdk_version: "6"
-	java_home: "/usr/lib/default-java"
-	oracle:
-	  accept_oracle_download_terms: true
+        install_flavor: "oracle"
+        jdk_version: "6"
+        java_home: "/usr/lib/default-java"
+        oracle:
+          accept_oracle_download_terms: true
