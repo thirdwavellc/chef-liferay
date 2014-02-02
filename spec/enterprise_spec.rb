@@ -3,7 +3,7 @@ require 'chefspec'
 describe 'liferay::enterprise' do
   let(:liferay_ee_zip_filename) { 'liferay-ee.zip' }
   let(:liferay_ee_zip_url) { 'http://www.example.com/liferay-ee.zip' }
-  let(:liferay_ee_zip_location) { "/home/liferay/#{liferay_ee_zip_filename}" }
+  let(:liferay_ee_zip_location) { "#{Chef::Config[:file_cache_path]}/#{liferay_ee_zip_filename}" }
   let(:liferay_ee_license_filename) { 'license' }
   let(:liferay_ee_license_url) { "http://www.example.com/#{liferay_ee_license_filename}" }
   let(:liferay_ee_license_location) { '/opt/liferay/deploy/license'}
