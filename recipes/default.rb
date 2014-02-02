@@ -42,22 +42,19 @@ remote_file "#{node['liferay']['download_directory']}/#{node['liferay']['downloa
   group node['liferay']['group']
   source node['liferay']['download_url']
   action :create_if_missing
-  notifies :run, "bash[Extract Liferay]", :immediately
 end
 
 bash "Extract Liferay" do
   cwd node['liferay']['download_directory']
-  user node['liferay']['user']
-  group node['liferay']['group']
-  code "unzip #{node['liferay']['download_filename']}"
-  action :nothing
-  notifies :run, "bash[Move Liferay]", :immediately
+  code "unzip #{node['liferay']['download_filename']} -d #{node['liferay']['install_directory']}"
+  action :run
+  not_if { File.directory? "#{node['liferay']['install_directory']}/#{node['liferay']['download_version']}" }
+  notifies :run, "bash[Chown Liferay]", :immediately
 end
 
-bash "Move Liferay" do
-  cwd node['liferay']['download_directory']
-  user "root"
-  code "mv #{node['liferay']['download_version']} #{node['liferay']['install_directory']}"
+bash "Chown Liferay" do
+  cwd node['liferay']['install_directory']
+  code "chown -R #{node['liferay']['user']}: #{node['liferay']['download_version']}"
   action :nothing
 end
 
@@ -70,7 +67,7 @@ end
 link "#{node['liferay']['install_directory']}/liferay/tomcat" do
   owner node['liferay']['user']
   group node['liferay']['group']
-  to "#{node['liferay']['install_directory']}/liferay/#{node['liferay']['tomcat_version']}"
+  to "#{node['liferay']['install_directory']}/#{node['liferay']['download_version']}/#{node['liferay']['tomcat_version']}"
 end
 
 Dir.glob("#{node['liferay']['install_directory']}/liferay/tomcat/bin/*.bat").each do |bat_file|

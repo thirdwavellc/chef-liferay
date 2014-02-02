@@ -28,7 +28,7 @@ default['liferay']['group'] = "liferay"
 default['liferay']['install_directory'] = "/opt"
 
 # Liferay Download
-default['liferay']['download_directory'] = "/home/#{liferay['user']}"
+default['liferay']['download_directory'] = Chef::Config[:file_cache_path]
 default['liferay']['download_version'] = "liferay-portal-6.1.1-ce-ga2"
 default['liferay']['download_filename'] = "liferay-portal-tomcat-6.1.1-ce-ga2-20120731132656558.zip"
 default['liferay']['download_url'] = "http://downloads.sourceforge.net/project/lportal/Liferay%20Portal/6.1.1%20GA2/#{liferay['download_filename']}"

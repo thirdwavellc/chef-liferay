@@ -3,9 +3,8 @@ require 'spec_helper'
 describe 'liferay::default' do
   let (:chef_run) { runner = ChefSpec::Runner.new(platform: 'ubuntu', version: '12.04').converge(described_recipe) }
   let(:liferay_zip_url) { 'http://downloads.sourceforge.net/project/lportal/Liferay%20Portal/6.1.1%20GA2/liferay-portal-tomcat-6.1.1-ce-ga2-20120731132656558.zip' }
-  let(:liferay_zip_location) { '/home/liferay/liferay-portal-tomcat-6.1.1-ce-ga2-20120731132656558.zip' }
+  let(:liferay_zip_location) { "#{Chef::Config[:file_cache_path]}/liferay-portal-tomcat-6.1.1-ce-ga2-20120731132656558.zip" }
   let (:liferay_zip) { chef_run.remote_file(liferay_zip_location) }
-  let (:extract_liferay) { chef_run.bash('Extract Liferay') }
   let(:liferay_init_template) { chef_run.template('/etc/init.d/liferay') }
 
   before do
@@ -32,13 +31,8 @@ describe 'liferay::default' do
     expect(chef_run).to create_remote_file_if_missing liferay_zip_location
   end
 
-  it 'should notify bash[Extract Liferay]' do
-    expect(liferay_zip).to notify('bash[Extract Liferay]').to(:run)
-  end
-
-  it 'should notify bash[Move Liferay]' do
-    pending("not sure how to define extract_liferay for notifications")
-    expect(extract_liferay).to notify('[Move Liferay]').to(:run)
+  it 'should run bash[Extract Liferay]' do
+    expect(chef_run).to run_bash('Extract Liferay')
   end
 
   it 'should create liferay directory link' do
@@ -48,7 +42,7 @@ describe 'liferay::default' do
 
   it 'should create tomcat directory link' do
     expect(chef_run).to create_link '/opt/liferay/tomcat'
-    expect(chef_run.link('/opt/liferay/tomcat')).to link_to '/opt/liferay/tomcat-7.0.27'
+    expect(chef_run.link('/opt/liferay/tomcat')).to link_to '/opt/liferay-portal-6.1.1-ce-ga2/tomcat-7.0.27'
   end
 
   # delete bat files
