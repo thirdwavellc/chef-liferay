@@ -19,10 +19,3 @@ desc "ChefSpec Unit Tests"
 task :chefspec do
   sh "bundle exec rspec --color vendor/cookbooks/liferay/spec"
 end
-
-begin
-  require 'kitchen/rake_tasks'
-  Kitchen::RakeTasks.new
-rescue LoadError
-  puts ">>>>> Kitchen gem not loaded, omitting tasks" unless ENV['CI']
-end
