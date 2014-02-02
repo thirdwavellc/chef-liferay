@@ -7,6 +7,10 @@ Vagrant.configure("2") do |config|
 
   config.berkshelf.enabled = true
 
+  if Vagrant.has_plugin?("vagrant-cachier")
+    config.cache.auto_detect = true
+  end
+
   # Liferay Box
   config.vm.define :liferay do |liferay|
 
@@ -25,6 +29,7 @@ Vagrant.configure("2") do |config|
     liferay.vm.provision :chef_solo do |chef|
       chef.add_recipe "liferay"
       chef.add_recipe "mysql-connector::java"
+
       chef.json = {
         :java => {
           :install_flavor => "oracle",
