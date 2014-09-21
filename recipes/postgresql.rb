@@ -19,6 +19,25 @@
 # limitations under the License.
 #
 
+include_recipe "apt"
+
+unless ENV['LANGUAGE'] == "en_US.UTF-8" && ENV['LANG'] == "en_US.UTF-8" && ENV['LC_ALL'] == "en_US.UTF-8"
+  execute "setup-locale" do
+    command "locale-gen en_US.UTF-8 && dpkg-reconfigure locales"
+    action :run
+  end
+
+  template "/etc/default/locale" do
+    source "locale.erb"
+    action :create
+  end
+
+  ENV['LANGUAGE'] = ENV['LANG'] = ENV['LC_ALL'] = "en_US.UTF-8"
+end
+
+include_recipe "postgresql::server"
+include_recipe "database::postgresql"
+
 postgresql_connection_info = {:host => "127.0.0.1",
                               :port => node['postgresql']['config']['port'],
                               :username => 'postgres',
@@ -32,46 +51,16 @@ postgresql_database_user node['liferay']['postgresql']['user'] do
   action :create
 end
 
-# create a postgresql database for use as default portal
-postgresql_database node['liferay']['postgresql']['db_default'] do
-  connection postgresql_connection_info
-  template 'template0'
-  encoding 'UTF8'
-  tablespace 'DEFAULT'
-  connection_limit '-1'
-  owner node['liferay']['postgresql']['user']
-  action :create
+# create databases
+node['liferay']['postgresql']['database'].each do |db, name|
+	postgresql_database name do
+	  connection postgresql_connection_info
+    template 'template0'
+    encoding 'UTF8'
+    tablespace 'DEFAULT'
+    connection_limit '-1'
+    owner node['liferay']['postgresql']['user']
+    action :create
+	end
 end
 
-# create a postgresql database for use as local dev
-postgresql_database node['liferay']['postgresql']['db_dev'] do
-  connection postgresql_connection_info
-  template 'template0'
-  encoding 'UTF8'
-  tablespace 'DEFAULT'
-  connection_limit '-1'
-  owner node['liferay']['postgresql']['user']
-  action :create
-end
-
-# create an empty postgresql database for use as local staging
-postgresql_database node['liferay']['postgresql']['db_staging'] do
-  connection postgresql_connection_info
-  template 'template0'
-  encoding 'UTF8'
-  tablespace 'DEFAULT'
-  connection_limit '-1'
-  owner node['liferay']['postgresql']['user']
-  action :create
-end
-
-# create an empty postgresql database for use as local production
-postgresql_database node['liferay']['postgresql']['db_production'] do
-  connection postgresql_connection_info
-  template 'template0'
-  encoding 'UTF8'
-  tablespace 'DEFAULT'
-  connection_limit '-1'
-  owner node['liferay']['postgresql']['user']
-  action :create
-end

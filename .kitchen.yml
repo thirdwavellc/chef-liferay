@@ -1,0 +1,30 @@
+---
+driver:
+  name: vagrant
+driver_config:
+  customize:
+    memory: 2048
+  network:
+    - ["private_network", {ip: "172.16.30.10"}]
+
+provisioner:
+  name: chef_solo
+
+platforms:
+  - name: ubuntu-13.10
+  - name: ubuntu-13.04
+  - name: ubuntu-12.10
+  - name: ubuntu-12.04
+  - name: ubuntu-10.04
+
+suites:
+  - name: default
+    run_list:
+      - recipe[liferay::default]
+    attributes:
+      java:
+        install_flavor: "oracle"
+        jdk_version: "6"
+        java_home: "/usr/lib/default-java"
+        oracle:
+          accept_oracle_download_terms: true

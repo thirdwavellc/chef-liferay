@@ -1,4 +1,4 @@
-# Liferay cookbook
+# Liferay cookbook [![Build Status](https://secure.travis-ci.org/thirdwavellc/chef-liferay.png)](http://travis-ci.org/thirdwavellc/chef-liferay)
 
 # Requirements
 
@@ -13,7 +13,7 @@
 
 # Platforms
 
-Currently only tested on Ubuntu 12.04, but should play nice within the Debian family.
+Tested on Ubuntu 12.04, but should play nice within the Debian family. Initial support for RHEL distros has been added, but is not as thoroughly tested at the moment.
 
 # Usage
 
@@ -39,15 +39,6 @@ The Vagrantfile included in this repo should give you an idea of what a typical 
 * `node['liferay']['download_url']` - Location of where to download Liferay
 * `node['liferay']['tomcat_version']` - Version of Tomcat
 
-**Commands**
-
-* `node['liferay']['extract_command']` - Command to extract Liferay download
-* `node['liferay']['start_command']` - Command to start the Tomcat server
-* `node['liferay']['stop_command']` - Command to stop the Tomcat server
-* `node['liferay']['install_marketplace_plugins_command']` - Command to install any plugins
-* `node['liferay']['move_patch_command']` - Command to move patches for deployment
-* `node['liferay']['install_patch_command']` - Command to install patches
-
 **Enterprise Edition**
 
 * `node['liferay']['ee']['license_filename']` - Filename for developer license
@@ -55,12 +46,30 @@ The Vagrantfile included in this repo should give you an idea of what a typical 
 
 **Tomcat**
 
-* `node['liferay']['tomcat']['server_xml']['port']` - Port Tomcat should run on
-* `node['liferay']['tomcat']['root_xml']['dsn']` - DSN to create
-* `node['liferay']['tomcat']['root_xml']['username']` - Username to create DSN
-* `node['liferay']['tomcat']['root_xml']['password']` - Password to create DSN
-* `node['liferay']['tomcat']['root_xml']['driver']` - Driver to use for DSN
-* `node['liferay']['tomcat']['root_xml']['jdbc_url']` - Location to access database
+*Memory Settings in setenv.sh*
+* `node['liferay']['tomcat']['max_memory']` - Maximum size of the Java heap (-Xmx)
+* `node['liferay']['tomcat']['min_memory']` - Initial and minimum size of Java heap (-Xms)
+* `node['liferay']['tomcat']['max_perm_size']` -  Maximum size for the permanent generation space (-XX:MaxPermSize)
+
+*Port settings in server.xml*
+* `node['liferay']['tomcat']['server_xml']['port']` - The port Tomcat should run on
+
+*JNDI Resource in {tomcat-home}/conf/Catalina/localhost/ROOT.xml*
+* `node['liferay']['tomcat']['root_xml']['jndi_resource']` - Hash of JNDI Resource settings to use in ROOT.xml server context
+
+for example
+```json
+  :jndi_resource=>{
+    :name=>"jdbc/my_liferay",
+    :auth=>"Container",
+    :type=>"javax.sql.DataSource",
+    :factory=>"org.apache.tomcat.jdbc.pool.DataSourceFactory",
+    :username=>"liferay_user",
+    :password=>"mypassword",
+    :driverClassName=>"com.mysql.jdbc.Driver",
+    :url=>"jdbc:mysql://db.company.com:3306/lportal"
+  }
+```
 
 # Recipes
 
@@ -77,6 +86,7 @@ The Vagrantfile included in this repo should give you an idea of what a typical 
 
 * Author:: Adam Krone <adam.krone@thirdwavellc.com>
 * Author:: Henry Kastler <henry.kastler@thirdwavellc.com>
+* Author:: Orin Fink <orin.fink@thirdwavellc.com>
 
 * Copyright:: 2013, Thirdwave, LLC
 

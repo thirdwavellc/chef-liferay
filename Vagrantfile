@@ -3,14 +3,20 @@
 
 Vagrant.configure("2") do |config|
 
+  config.omnibus.chef_version = :latest
+
   config.berkshelf.enabled = true
+
+  if Vagrant.has_plugin?("vagrant-cachier")
+    config.cache.auto_detect = true
+  end
 
   # Liferay Box
   config.vm.define :liferay do |liferay|
 
-    liferay.vm.box = "precise64"
+    liferay.vm.box = "opscode-precise64-provisionerless"
 
-    liferay.vm.box_url = "http://files.vagrantup.com/precise64.box"
+    liferay.vm.box_url = "https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box"
 
     liferay.vm.provider "virtualbox" do |v|
       v.name = "Liferay"
@@ -21,22 +27,29 @@ Vagrant.configure("2") do |config|
     liferay.vm.network :private_network, ip: "172.16.30.10"
 
     liferay.vm.provision :chef_solo do |chef|
-      chef.add_recipe "apt"
-      chef.add_recipe "unzip"
-      chef.add_recipe "imagemagick"
-      chef.add_recipe "java"
       chef.add_recipe "liferay"
-      chef.add_recipe "liferay::aliases"
       chef.add_recipe "mysql-connector::java"
+
+      chef.json = {
+        :java => {
+          :install_flavor => "oracle",
+          :jdk_version => "6",
+          :java_home => "/usr/lib/default-java",
+          :oracle => {
+            :accept_oracle_download_terms => true
+          }
+        }
+      }
+    
     end
   end
 
   # PostgreSQL Box
   config.vm.define :postgres do |postgres|
 
-    postgres.vm.box = "precise64"
+    postgres.vm.box = "opscode-precise64-provisionerless"
 
-    postgres.vm.box_url = "http://files.vagrantup.com/precise64.box"
+    postgres.vm.box_url = "https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box"
 
     postgres.vm.provider "virtualbox" do |v|
 
@@ -49,9 +62,6 @@ Vagrant.configure("2") do |config|
     postgres.vm.network :private_network, ip: "172.16.40.10"
 
     postgres.vm.provision :chef_solo do |chef|
-      chef.add_recipe "apt"
-      chef.add_recipe "database::postgresql"
-      chef.add_recipe "postgresql::server"
       chef.add_recipe "liferay::postgresql"
 
       chef.json = {
@@ -86,12 +96,12 @@ Vagrant.configure("2") do |config|
   # MySQL Box
   config.vm.define :mysql do |mysql|
 
-    mysql.vm.box = "precise64"
+    mysql.vm.box = "opscode-precise64-provisionerless"
 
-    mysql.vm.box_url = "http://files.vagrantup.com/precise64.box"
+    mysql.vm.box_url = "https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box"
 
     mysql.vm.provider "virtualbox" do |v|
-      v.name = "IMSA MySQL"
+      v.name = "Liferay MySQL"
 
       v.customize  ["modifyvm", :id, "--memory", 1024]
     end

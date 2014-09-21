@@ -28,7 +28,7 @@ default['liferay']['group'] = "liferay"
 default['liferay']['install_directory'] = "/opt"
 
 # Liferay Download
-default['liferay']['download_directory'] = ""
+default['liferay']['download_directory'] = Chef::Config[:file_cache_path]
 default['liferay']['download_version'] = "liferay-portal-6.1.1-ce-ga2"
 default['liferay']['download_filename'] = "liferay-portal-tomcat-6.1.1-ce-ga2-20120731132656558.zip"
 default['liferay']['download_url'] = "http://downloads.sourceforge.net/project/lportal/Liferay%20Portal/6.1.1%20GA2/#{liferay['download_filename']}"
@@ -46,21 +46,37 @@ default['liferay']['copy_ecj'] = "cp /vagrant/lib/ecj.jar /usr/share/ant/lib/ecj
 default['liferay']['ee']['license_filename'] = "your-license-here"
 default['liferay']['ee']['license_url'] = "your-license-here"
 default['liferay']['ee']['patching_tool_zip'] = ""
-default['liferay']['ee']['move_patch_command'] = "cp /vagrant/downloads/patches/* #{liferay['install_directory']}/liferay/patching-tool/patches/"
-default['liferay']['ee']['install_patch_command'] = "sh patching-tool.sh install"
 
 # Tomcat
 default['liferay']['tomcat']['server_xml']['port'] = "8080"
-default['liferay']['tomcat']['root_xml']['dsn'] = "jdbc/lportal"
-default['liferay']['tomcat']['root_xml']['username'] = "test"
-default['liferay']['tomcat']['root_xml']['password'] = "test"
-default['liferay']['tomcat']['root_xml']['driver'] = "org.postgresql.Driver"
-default['liferay']['tomcat']['root_xml']['jdbc_url'] = "jdbc:postgresql://172.16.33.110:5432/lportal"
-
+default['liferay']['tomcat']['root_xml']['jndi_resource']['name'] = "jdbc/lportal"
+default['liferay']['tomcat']['root_xml']['jndi_resource']['auth'] = "Container"
+default['liferay']['tomcat']['root_xml']['jndi_resource']['type'] = "javax.sql.DataSource"
+default['liferay']['tomcat']['root_xml']['jndi_resource']['username'] = "liferay_user"
+default['liferay']['tomcat']['root_xml']['jndi_resource']['password'] = "l1f3r4y$"
+default['liferay']['tomcat']['root_xml']['jndi_resource']['driverClassName'] = "org.postgresql.Driver"
+default['liferay']['tomcat']['root_xml']['jndi_resource']['url'] = "jdbc:postgresql://localhost:5432/lportal"
+default['liferay']['tomcat']['max_memory'] = "1024m"
+default['liferay']['tomcat']['min_memory'] = "1024m"
+default['liferay']['tomcat']['max_perm_size'] = "384m"
+default['liferay']['tomcat']['additional_java_ops'] = ""
+default['liferay']['tomcat']['jndi_resource']['name']
+  
 # PostgreSQL
 default['liferay']['postgresql']['user'] = "liferay_user"
 default['liferay']['postgresql']['user_password'] = "l1f3r4y$"
-default['liferay']['postgresql']['db_default'] = "lportal"
-default['liferay']['postgresql']['db_dev'] = "liferay_dev"
-default['liferay']['postgresql']['db_staging'] = "liferay_stage"
-default['liferay']['postgresql']['db_production'] = "liferay_prod"
+default['liferay']['postgresql']['database']['default'] = "lportal"
+default['liferay']['postgresql']['database']['dev'] = "liferay_dev"
+default['liferay']['postgresql']['database']['staging'] = "liferay_stage"
+default['liferay']['postgresql']['database']['production'] = "liferay_prod"
+  
+# MySQL
+default['liferay']['mysql']['user'] = "liferay_user"
+default['liferay']['mysql']['user_password'] = "l1f3r4y$"
+default['liferay']['mysql']['database']['default'] = "lportal"
+default['liferay']['mysql']['database']['dev'] = "liferay_dev"
+default['liferay']['mysql']['database']['staging'] = "liferay_stage"
+default['liferay']['mysql']['database']['production'] = "liferay_prod"
+
+# EXT
+default['liferay']['load_ext'] = false
