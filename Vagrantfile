@@ -18,12 +18,12 @@ Vagrant.configure("2") do |config|
 
     liferay.vm.box_url = "https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-14.04_provisionerless.box"
 
-    liferay.vm.provider "virtualbox" do |v|
-      v.name = "Liferay"
+    liferay.vm.provider "virtualbox" do |vb|
+      vb.name = "Liferay"
 
-      v.customize ["modifyvm", :id, "--memory", 2048]
-      v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-      v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+      vb.customize ["modifyvm", :id, "--memory", 2048]
+      vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
     end
 
     liferay.vm.network :private_network, ip: "172.16.30.10"
@@ -55,13 +55,13 @@ Vagrant.configure("2") do |config|
 
     postgres.vm.box_url = "https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-14.04_provisionerless.box"
 
-    postgres.vm.provider "virtualbox" do |v|
+    postgres.vm.provider "virtualbox" do |vb|
 
-      v.name = "Liferay PostgreSQL"
+      vb.name = "Liferay PostgreSQL"
 
-      v.customize ["modifyvm", :id, "--memory", 1024]
-      v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-      v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+      vb.customize ["modifyvm", :id, "--memory", 1024]
+      vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
     end
 
     postgres.vm.network :private_network, ip: "172.16.40.10"
@@ -108,12 +108,12 @@ Vagrant.configure("2") do |config|
 
     mysql.vm.box_url = "https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-14.04_provisionerless.box"
 
-    mysql.vm.provider "virtualbox" do |v|
-      v.name = "Liferay MySQL"
+    mysql.vm.provider "virtualbox" do |vb|
+      vb.name = "Liferay MySQL"
 
-      v.customize  ["modifyvm", :id, "--memory", 1024]
-      v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
-      v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+      vb.customize  ["modifyvm", :id, "--memory", 1024]
+      vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
     end
 
     mysql.vm.network :private_network, ip: "172.16.40.20"
