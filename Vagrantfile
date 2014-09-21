@@ -27,6 +27,9 @@ Vagrant.configure("2") do |config|
     liferay.vm.network :private_network, ip: "172.16.30.10"
 
     liferay.vm.provision :chef_solo do |chef|
+    
+      chef.custom_config_path = "Vagrantfile.chef"
+          
       chef.add_recipe "liferay"
       chef.add_recipe "mysql-connector::java"
 
@@ -62,6 +65,9 @@ Vagrant.configure("2") do |config|
     postgres.vm.network :private_network, ip: "172.16.40.10"
 
     postgres.vm.provision :chef_solo do |chef|
+
+      chef.custom_config_path = "Vagrantfile.chef"    
+    
       chef.add_recipe "liferay::postgresql"
 
       chef.json = {
@@ -109,6 +115,9 @@ Vagrant.configure("2") do |config|
     mysql.vm.network :private_network, ip: "172.16.40.20"
 
     mysql.vm.provision :chef_solo do |chef|
+    
+      chef.custom_config_path = "Vagrantfile.chef"    
+    
       chef.add_recipe "apt"
       chef.add_recipe "database::mysql"
       chef.add_recipe "mysql::server"
