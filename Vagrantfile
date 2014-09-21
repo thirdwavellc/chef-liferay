@@ -14,9 +14,9 @@ Vagrant.configure("2") do |config|
   # Liferay Box
   config.vm.define :liferay do |liferay|
 
-    liferay.vm.box = "opscode-precise64-provisionerless"
+    liferay.vm.box = "opscode-trusty64-provisionerless"
 
-    liferay.vm.box_url = "https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box"
+    liferay.vm.box_url = "https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-14.04_provisionerless.box"
 
     liferay.vm.provider "virtualbox" do |v|
       v.name = "Liferay"
@@ -47,9 +47,9 @@ Vagrant.configure("2") do |config|
   # PostgreSQL Box
   config.vm.define :postgres do |postgres|
 
-    postgres.vm.box = "opscode-precise64-provisionerless"
+    postgres.vm.box = "opscode-trusty64-provisionerless"
 
-    postgres.vm.box_url = "https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box"
+    postgres.vm.box_url = "https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-14.04_provisionerless.box"
 
     postgres.vm.provider "virtualbox" do |v|
 
@@ -96,9 +96,9 @@ Vagrant.configure("2") do |config|
   # MySQL Box
   config.vm.define :mysql do |mysql|
 
-    mysql.vm.box = "opscode-precise64-provisionerless"
+    mysql.vm.box = "opscode-trusty64-provisionerless"
 
-    mysql.vm.box_url = "https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box"
+    mysql.vm.box_url = "https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-14.04_provisionerless.box"
 
     mysql.vm.provider "virtualbox" do |v|
       v.name = "Liferay MySQL"
