@@ -22,6 +22,8 @@ Vagrant.configure("2") do |config|
       v.name = "Liferay"
 
       v.customize ["modifyvm", :id, "--memory", 2048]
+      v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
     end
 
     liferay.vm.network :private_network, ip: "172.16.30.10"
@@ -58,7 +60,8 @@ Vagrant.configure("2") do |config|
       v.name = "Liferay PostgreSQL"
 
       v.customize ["modifyvm", :id, "--memory", 1024]
-
+      v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
     end
 
     postgres.vm.network :private_network, ip: "172.16.40.10"
@@ -109,6 +112,8 @@ Vagrant.configure("2") do |config|
       v.name = "Liferay MySQL"
 
       v.customize  ["modifyvm", :id, "--memory", 1024]
+      v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+      v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
     end
 
     mysql.vm.network :private_network, ip: "172.16.40.20"
