@@ -36,8 +36,7 @@ Vagrant.configure("2") do |config|
       chef.json = {
         :java => {
           :install_flavor => "oracle",
-          :jdk_version => "6",
-          :java_home => "/usr/lib/default-java",
+          :jdk_version => "7",
           :oracle => {
             :accept_oracle_download_terms => true
           }
