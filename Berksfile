@@ -3,6 +3,7 @@ source "https://supermarket.getchef.com"
 metadata
 
 cookbook 'apt'
+cookbook 'ant', github: 'thirdwavellc/ant'
 cookbook 'unzip', github: 'thirdwavellc/chef-unzip'
 cookbook 'imagemagick'
 cookbook 'java'
