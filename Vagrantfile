@@ -14,9 +14,7 @@ Vagrant.configure("2") do |config|
   # Liferay Box
   config.vm.define :liferay do |liferay|
 
-    liferay.vm.box = "opscode-trusty64-provisionerless"
-
-    liferay.vm.box_url = "https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-14.04_provisionerless.box"
+    liferay.vm.box = "chef/ubuntu-14.04"
 
     liferay.vm.provider "virtualbox" do |vb|
       vb.name = "Liferay"
