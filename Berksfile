@@ -9,5 +9,6 @@ cookbook 'imagemagick'
 cookbook 'java'
 cookbook 'mysql-connector', github: 'thirdwavellc/chef-mysql-connector', tag: '0.3.1'
 cookbook 'database'
+cookbook 'mysql'
 cookbook 'postgresql'
 cookbook 'thirdwave-dotfiles', github: 'thirdwavellc/chef-thirdwave-dotfiles', tag: "0.3.2"
