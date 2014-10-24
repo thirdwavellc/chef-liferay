@@ -64,6 +64,12 @@ link "#{node['liferay']['install_directory']}/liferay" do
   to "#{node['liferay']['install_directory']}/#{node['liferay']['download_version']}"
 end
 
+link "/bundles" do
+  owner node['liferay']['user']
+  group node['liferay']['group']
+  to "#{node['liferay']['install_directory']}/#{node['liferay']['download_version']}"
+end
+
 link "#{node['liferay']['install_directory']}/liferay/tomcat" do
   owner node['liferay']['user']
   group node['liferay']['group']
@@ -154,6 +160,7 @@ bash "Load EXT Environment" do
 	user node['liferay']['user']
   group node['liferay']['group']
   code <<-EOH
+    #{node['liferay']['copy_ecj']}
     ant deploy-properties -buildfile #{node['liferay']['ext_buildfile']}
     ant war -buildfile #{node['liferay']['ext_buildfile']}
     mkdir -p dist
