@@ -46,7 +46,7 @@ end
 
 bash "Extract Liferay" do
   cwd node['liferay']['download_directory']
-  code "unzip #{node['liferay']['download_filename']} -d #{node['liferay']['install_directory']}"
+  code "unzip -n #{node['liferay']['download_filename']} -d #{node['liferay']['install_directory']}"
   action :run
   not_if { File.directory? "#{node['liferay']['install_directory']}/#{node['liferay']['download_version']}" }
   notifies :run, "bash[Chown Liferay]", :immediately
