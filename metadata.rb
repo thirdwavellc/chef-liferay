@@ -3,7 +3,7 @@ maintainer        "Thirdwave, LLC"
 maintainer_email  "adam.krone@thirdwavellc.com"
 license           "Apache 2.0"
 description       "Installs and configures Liferay"
-version           "0.13.2"
+version           "0.13.3"
 
 depends "apt"
 depends "unzip"
