@@ -2,8 +2,8 @@
 # Cookbook Name:: liferay
 # Provider:: liferay_app
 #
-#     Copyright 2014 Adam Krone <adam.krone@thirdwavellc.com>
-#     Copyright 2014 Thirdwave, LLC
+#     Copyright 2015 Adam Krone <adam.krone@thirdwavellc.com>
+#     Copyright 2015 Thirdwave, LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

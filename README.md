@@ -18,29 +18,35 @@ The primary way to consume this cookbook is through the LWRP it provides:
 
 ## liferay_app
 
+Installs and configures software necessary for running a Liferay app.
+
 **Attributes**
 
-| Name       | Description                            | Type   | Required | Default                    |
-| app_name   | Name of the application                | String | true     | N/A                        |
-| user       | User that owns the Liferay process     | String | false    | 'liferay'                  |
-| group      | Group that owns the Liferay process    | String | false    | 'liferay'                  |
-| home_dir   | Home directory for Liferay app         | String | false    | '/opt/liferay'             |
-| tomcat_dir | Tomcat directory in the Liferay bundle | String | false    | '/opt/liferay/tomcat'      |
-| log_dir    | Tomcat log directory                   | String | false    | '/opt/liferay/tomcat/logs' |
+| Name         | Description                              | Type     | Required   | Default                       |
+| ------------ | ---------------------------------------- | -------- | ---------- | ----------------------------- |
+| app_name     | Name of the application                  | String   | true       | N/A                           |
+| user         | User that owns the Liferay process       | String   | false      | 'liferay'                     |
+| group        | Group that owns the Liferay process      | String   | false      | 'liferay'                     |
+| home_dir     | Home directory for Liferay app           | String   | false      | '/opt/liferay'                |
+| tomcat_dir   | Tomcat directory in the Liferay bundle   | String   | false      | '/opt/liferay/tomcat'         |
+| log_dir      | Tomcat log directory                     | String   | false      | '/opt/liferay/tomcat/logs'    |
 
 # Attributes
 
-| Attribute                       | Description                            | Default                    |
-| `node['liferay']['app_name']`   | Name of the Liferay app                | 'liferay_app'              |
-| `node['liferay']['user']`       | User tha owns the Liferay process      | 'liferay'                  |
-| `node['liferay']['group']`      | Group that owns the Liferay process    | 'liferay'                  |
-| `node['liferay']['home_dir']`   | Home directory for the Liferay app     | '/opt/liferay'             |
-| `node['liferay']['tomcat_dir']` | Tomcat directory in the Liferay bundle | '/opt/liferay/tomcat'      |
-| `node['liferay']['log_dir']`    | Tomcat log directory                   | '/opt/liferay/tomcat/logs' |
+| Attribute                         | Description                              | Default                      |
+| --------------------------------- | ---------------------------------------- | ---------------------------- |
+| `node['liferay']['app_name']`     | Name of the Liferay app                  | 'liferay_app'                |
+| `node['liferay']['user']`         | User tha owns the Liferay process        | 'liferay'                    |
+| `node['liferay']['group']`        | Group that owns the Liferay process      | 'liferay'                    |
+| `node['liferay']['home_dir']`     | Home directory for the Liferay app       | '/opt/liferay'               |
+| `node['liferay']['tomcat_dir']`   | Tomcat directory in the Liferay bundle   | '/opt/liferay/tomcat'        |
+| `node['liferay']['log_dir']`      | Tomcat log directory                     | '/opt/liferay/tomcat/logs'   |
 
 # Recipes
 
-* **default** - Uses the liferay_app LWRP and node attributes to configure a Liferay environment
+## default
+
+Uses the `liferay_app` LWRP and node attributes to configure a Liferay environment
 
 # License and Authors
 
