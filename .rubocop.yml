@@ -1,0 +1,13 @@
+AllCops:
+  Exclude:
+    - 'metadata.rb'
+    - '.kitchen/*'
+    - 'spec/fixtures/**/*'
+    - 'Berksfile*'
+
+Metrics/LineLength:
+  Max: 100
+
+Documentation:
+  Enabled:
+    false
