@@ -1,21 +1,28 @@
-task :default=> [
-  :foodcritic,
-  :berks,
-  :chefspec
-]
+task default: 'all'
 
-desc "Berksfile install"
-task :berks do
-  sh "rm -rf vendor"
-  sh "bundle exec berks install --path vendor/cookbooks"
+desc 'Run all tests'
+task all: [:rubocop, :foodcritic, :chefspec]
+
+# rubocop style checker
+require 'rubocop/rake_task'
+RuboCop::RakeTask.new
+
+# foodcritic chef lint
+require 'foodcritic'
+FoodCritic::Rake::LintTask.new do |t|
+  t.options = { fail_tags: ['any'] }
 end
 
-desc "Foodcritic linting"
-task :foodcritic do
-  sh " bundle exec foodcritic ."
+# chefspec unit tests
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:chefspec) do |t|
+  t.rspec_opts = '--color --format progress'
 end
 
-desc "ChefSpec Unit Tests"
-task :chefspec do
-  sh "bundle exec rspec --color vendor/cookbooks/liferay/spec"
+# test-kitchen integration tests
+begin
+  require 'kitchen/rake_tasks'
+  Kitchen::RakeTasks.new
+rescue LoadError
+  task('kitchen:all') { puts 'Unable to run `test-kitchen`' }
 end

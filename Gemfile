@@ -1,8 +1,9 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-gem 'rake'
 gem 'berkshelf'
+gem 'serverspec'
 gem 'foodcritic'
 gem 'chefspec'
-gem 'test-kitchen'
-gem 'kitchen-vagrant'
+gem 'chef'
+gem 'rubocop', require: false
+gem 'coveralls', require: false

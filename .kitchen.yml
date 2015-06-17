@@ -1,21 +1,15 @@
 ---
 driver:
   name: vagrant
-driver_config:
-  customize:
-    memory: 2048
-  network:
-    - ["private_network", {ip: "172.16.30.10"}]
 
 provisioner:
-  name: chef_solo
+  name: chef_zero
 
 platforms:
-  - name: ubuntu-13.10
-  - name: ubuntu-13.04
-  - name: ubuntu-12.10
+  - name: ubuntu-14.04
   - name: ubuntu-12.04
-  - name: ubuntu-10.04
+  - name: centos-6.6
+  - name: centos-7.1
 
 suites:
   - name: default
@@ -24,7 +18,7 @@ suites:
     attributes:
       java:
         install_flavor: "oracle"
-        jdk_version: "6"
-        java_home: "/usr/lib/default-java"
+        jdk_version: "8"
+        java_home: "/usr/lib/jvm/default-java"
         oracle:
           accept_oracle_download_terms: true
