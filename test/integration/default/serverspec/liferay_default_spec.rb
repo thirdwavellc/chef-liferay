@@ -23,7 +23,7 @@ describe 'liferay' do
     end
   end
 
-  describe 'application directory' do
+  describe 'deploy directory' do
     let(:liferay_dir) { file('/opt/liferay') }
 
     it 'should exist' do

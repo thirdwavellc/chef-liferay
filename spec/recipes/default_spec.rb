@@ -47,7 +47,7 @@ describe 'liferay::default' do
     expect(chef_run).to render_file '/etc/logrotate.d/liferay'
   end
 
-  it 'should create the liferay app directory' do
+  it 'should create the liferay deploy directory' do
     expect(chef_run).to create_directory '/opt/liferay'
   end
 end

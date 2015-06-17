@@ -30,6 +30,7 @@ class Chef
       attribute :app_name, kind_of: String, name_attribute: true
       attribute :user, kind_of: String, default: 'liferay'
       attribute :group, kind_of: String, default: 'liferay'
+      attribute :deploy_dir, kind_of: String, default: '/opt/liferay'
       attribute :home_dir, kind_of: String, default: '/opt/liferay'
       attribute :tomcat_dir, kind_of: String, default: '/opt/liferay/tomcat'
       attribute :log_dir, kind_of: String, default: '/opt/liferay/tomcat/logs'
