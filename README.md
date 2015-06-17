@@ -27,6 +27,7 @@ Installs and configures software necessary for running a Liferay app.
 | app_name     | Name of the application                  | String   | true       | N/A                           |
 | user         | User that owns the Liferay process       | String   | false      | 'liferay'                     |
 | group        | Group that owns the Liferay process      | String   | false      | 'liferay'                     |
+| deploy_dir   | Root deploy directory                    | String   | false      | '/opt/liferay'                |
 | home_dir     | Home directory for Liferay app           | String   | false      | '/opt/liferay'                |
 | tomcat_dir   | Tomcat directory in the Liferay bundle   | String   | false      | '/opt/liferay/tomcat'         |
 | log_dir      | Tomcat log directory                     | String   | false      | '/opt/liferay/tomcat/logs'    |
@@ -38,6 +39,7 @@ Installs and configures software necessary for running a Liferay app.
 | `node['liferay']['app_name']`     | Name of the Liferay app                  | 'liferay_app'                |
 | `node['liferay']['user']`         | User tha owns the Liferay process        | 'liferay'                    |
 | `node['liferay']['group']`        | Group that owns the Liferay process      | 'liferay'                    |
+| `node['liferay']['deploy_dir']`   | Root deploy directory                    | '/opt/liferay'               |
 | `node['liferay']['home_dir']`     | Home directory for the Liferay app       | '/opt/liferay'               |
 | `node['liferay']['tomcat_dir']`   | Tomcat directory in the Liferay bundle   | '/opt/liferay/tomcat'        |
 | `node['liferay']['log_dir']`      | Tomcat log directory                     | '/opt/liferay/tomcat/logs'   |

@@ -65,7 +65,7 @@ class Chef
           variables(liferay_log_home: new_resource.log_dir)
         end
 
-        directory new_resource.home_dir do
+        directory new_resource.deploy_dir do
           owner new_resource.user
           group new_resource.group
           action :create

@@ -23,6 +23,7 @@
 default['liferay']['app_name'] = 'liferay_app'
 default['liferay']['user'] = 'liferay'
 default['liferay']['group'] = 'liferay'
+default['liferay']['deploy_dir'] = '/opt/liferay'
 default['liferay']['home_dir'] = '/opt/liferay'
 default['liferay']['tomcat_dir'] = '/opt/liferay/tomcat'
 default['liferay']['log_dir'] = '/opt/liferay/tomcat/logs'
