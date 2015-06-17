@@ -25,6 +25,7 @@ liferay_app node['liferay']['app_name'] do
   user node['liferay']['user']
   group node['liferay']['group']
   home_dir node['liferay']['home_dir']
+  tomcat_dir node['liferay']['tomcat_dir']
   log_dir node['liferay']['log_dir']
   action :create
 end
