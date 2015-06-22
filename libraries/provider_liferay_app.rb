@@ -51,6 +51,7 @@ class Chef
         end
 
         template '/etc/init.d/liferay' do
+          cookbook 'liferay'
           source 'liferay.init.erb'
           mode 00755
           variables(tomcat_dir: new_resource.tomcat_dir,
@@ -60,6 +61,7 @@ class Chef
         end
 
         template '/etc/logrotate.d/liferay' do
+          cookbook 'liferay'
           source 'logrotate.d.liferay.erb'
           mode 00755
           variables(liferay_log_home: new_resource.log_dir)
@@ -68,6 +70,7 @@ class Chef
         directory new_resource.deploy_dir do
           owner new_resource.user
           group new_resource.group
+          recursive true
           action :create
         end
       end
