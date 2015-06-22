@@ -70,6 +70,7 @@ class Chef
         directory new_resource.deploy_dir do
           owner new_resource.user
           group new_resource.group
+          recursive true
           action :create
         end
       end
