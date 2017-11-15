@@ -25,6 +25,7 @@ class Chef
     class LiferayApp < Chef::Provider::LWRPBase
       include Chef::DSL::IncludeRecipe
       use_inline_resources if defined?(use_inline_resources)
+      provides :liferay_app
 
       def whyrun_supported?
         true
