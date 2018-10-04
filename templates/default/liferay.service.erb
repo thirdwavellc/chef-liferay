@@ -1,0 +1,14 @@
+[Unit]
+Description=Liferay
+After=network.target
+
+[Service]
+User=<%= @user %>
+Group=<%= @group %>
+ExecStart=<%= @tomcat_dir %>/bin/startup.sh
+ExecStop=<%= @tomcat_dir %>/bin/shutdown.sh
+TimeoutStartSec=<%= @timeout_start %>
+TimeoutStopSec=<%= @timeout_stop %>
+
+[Install]
+WantedBy=multi-user.target

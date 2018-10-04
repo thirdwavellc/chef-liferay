@@ -34,6 +34,8 @@ class Chef
       attribute :home_dir, kind_of: String, default: '/opt/liferay'
       attribute :tomcat_dir, kind_of: String, default: '/opt/liferay/tomcat'
       attribute :log_dir, kind_of: String, default: '/opt/liferay/tomcat/logs'
+      attribute :timeout_start, kind_of: Integer, default: 600
+      attribute :timeout_stop, kind_of: Integer, default: 200
     end
   end
 end

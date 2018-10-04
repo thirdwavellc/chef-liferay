@@ -51,14 +51,27 @@ class Chef
           supports restart: true
         end
 
-        template '/etc/init.d/liferay' do
-          cookbook 'liferay'
-          source 'liferay.init.erb'
-          mode 00755
-          variables(tomcat_dir: new_resource.tomcat_dir,
-                    user: new_resource.user,
-                    group: new_resource.group)
-          notifies :enable, 'service[liferay]', :delayed
+        case node['init_package']
+        when 'init'
+          template '/etc/init.d/liferay' do
+            cookbook 'liferay'
+            source 'liferay.init.erb'
+            mode 00755
+            variables(tomcat_dir: new_resource.tomcat_dir,
+                      user: new_resource.user,
+                      group: new_resource.group)
+            notifies :enable, 'service[liferay]', :delayed
+          end
+        when 'systemd'
+          template '/etc/systemd/system/liferay.service' do
+            cookbook 'liferay'
+            source 'liferay.service.erb'
+            mode 00755
+            variables(tomcat_dir: new_resource.tomcat_dir,
+                      user: new_resource.user,
+                      group: new_resource.group)
+            notifies :enable, 'service[liferay]', :delayed
+          end
         end
 
         template '/etc/logrotate.d/liferay' do
