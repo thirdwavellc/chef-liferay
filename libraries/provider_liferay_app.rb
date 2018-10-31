@@ -69,7 +69,9 @@ class Chef
             mode 00755
             variables(tomcat_dir: new_resource.tomcat_dir,
                       user: new_resource.user,
-                      group: new_resource.group)
+                      group: new_resource.group,
+                      timeout_start: new_resource.timeout_start,
+                      timeout_stop: new_resource.timeout_stop)
             notifies :enable, 'service[liferay]', :delayed
           end
         end

@@ -3,6 +3,7 @@ Description=Liferay
 After=network.target
 
 [Service]
+Type=forking
 User=<%= @user %>
 Group=<%= @group %>
 ExecStart=<%= @tomcat_dir %>/bin/startup.sh
